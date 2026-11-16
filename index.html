@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Life Expectancy Calculator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%230f6e56' width='16' height='16' rx='3'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-400.css" integrity="sha384-zc+mzApNgdFM05uzzG/c/4wVZ4LHLa0ZrZyeZYh4tq7GukSAQ2T6xYGTgE+mssl6" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-500.css" integrity="sha384-qQNBh9lqouy2cYDoo4juNJA13aqnsp9d2wUELHHjfCqCJR7HR0DbgamXRvSWXuH/" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-600.css" integrity="sha384-sIxfdbMxNyRS8ALLKQtuDA2c/167yRmp3egSBaxjFVG167V3b1JFy7HPQdrxziBJ" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.3.0/latin-700.css" integrity="sha384-qIiEwfeovj0ewBGH8n6bkz0WIS8pOCQ8xV0byBksQD0KeXY0dmQr3eXjhcSqFhbH" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.3.0/latin-500.css" integrity="sha384-XujSTj864ypSe2XnmBmYdvBMz90Vf+1WSta/vV3CPKwzCm5jJH0ku8aY9wZ4/V8J" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.3.0/latin-600.css" integrity="sha384-UTuyCWnnjkinQQt6L9F0b6gcZy7dbihkF8oFtBAlrlKFyJX61JYyRbN6aM7crQMY" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.3.0/latin-700.css" integrity="sha384-/CWpATYEXCI7bzhsHea9uO2foj1KdI4VOJdvc5bhrQ3bYkm7rzI1vlVdtRD+Lf5f" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.3.0/latin-800.css" integrity="sha384-+OfEGrp0ImtJuiC3shL8P3JTulatYMLmHJpronQHIqW/LwhhDIWK47Zhejj9ipHi" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@5.8.1/daisyui.css" integrity="sha384-eqHorTLT70/HHfUj5nW7Q1g6nmxTCW7XdVOoFDVUpTrxNPh01EESN+E2w7SSRQRp" crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.5/dist/index.global.js" integrity="sha384-t+qLIxS5zM/KF99/doWY+dxTsavdvgayaZt8A9ntLsUjEkiXzYl5M3Ij8zVFPL9j" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --color-base-100: #ffffff;
+    --color-base-200: #f3f7fc;
+    --color-base-300: #e2eaf6;
+    --color-base-content: #0f2744;
+    --color-primary: #2563eb;
+    --color-primary-content: #ffffff;
+    --color-secondary: #059669;
+    --color-secondary-content: #ffffff;
+    --color-accent: #0ea5e9;
+    --color-accent-content: #ffffff;
+    --color-neutral: #0f2744;
+    --color-neutral-content: #f8fbff;
+    --color-info: #1d4ed8;
+    --color-info-content: #eff6ff;
+    --color-success: #059669;
+    --color-success-content: #ecfdf5;
+    --color-warning: #b45309;
+    --color-warning-content: #fffbeb;
+    --color-error: #b91c1c;
+    --color-error-content: #fff6f6;
+    --radius-box: 1.25rem;
+    --radius-field: 0.8rem;
+  }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body {
+    margin: 0;
+    overflow-x: clip;
+    background: #f4f7fb;
+    color: #0f2744;
+    font-family: Inter, "Segoe UI", sans-serif;
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+  .hidden { display: none !important; }
+  .display-num, .stat-value, h1, h2, .brand strong {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+  }
+  .stat-value {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.05;
+    color: #1d4ed8;
+  }
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid #e2eaf6;
+  }
+  .topbar-inner, .wrap {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .topbar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+  .brand-mark {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(160deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex: none;
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+  }
+  .brand h1 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+  .brand span { display: block; font-size: 0.75rem; color: #64748b; margin-top: 0.1rem; }
+  .sources { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+  .sources-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-right: 0.15rem;
+  }
+  .source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #fff;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem 0.2rem 0.2rem;
+    color: #1e3a8a;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 39, 68, 0.05);
+  }
+  .source:hover { border-color: #93c5fd; background: #eff6ff; }
+  .source svg { width: 1.7rem; height: 1.7rem; display: block; }
+  .wrap { padding-top: 0.75rem; padding-bottom: 7rem; }
+  .card {
+    border: 1px solid #e6eef8;
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.06);
+  }
+  .field-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .tip-btn {
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1;
+    cursor: help;
+  }
+  .tooltip::before {
+    white-space: normal;
+    max-width: 16rem;
+    width: max-content;
+    text-align: left;
+  }
+  .kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2563eb;
+  }
+  .disclaimer {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #78350f;
+    border-radius: 0.9rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+  }
+  #profile :is(.input, .select).field-need {
+    background-color: #fef3c7;
+    border-color: #d97706;
+  }
+  #profile :is(.input, .select).field-set {
+    background-color: #dcfce7;
+    border-color: #16a34a;
+  }
+  #profile :is(.input, .select).field-auto {
+    background-color: #dbeafe;
+    border-color: #2563eb;
+  }
+  #profile .range.field-need { accent-color: #d97706; }
+  #profile .range.field-set { accent-color: #16a34a; }
+  #profile .range.field-auto { accent-color: #2563eb; }
+  .swatch {
+    display: inline-block;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 0.2rem;
+    vertical-align: -0.1rem;
+    margin-right: 0.35rem;
+  }
+  .swatch-now {
+    width: 0;
+    height: 0.95rem;
+    border-radius: 0;
+    border-left: 2px dashed #dc2626;
+    background: transparent;
+    vertical-align: -0.15rem;
+  }
+  .year-table { width: 100%; }
+  .year-table td:last-child, .year-table th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .year-table tr.plus td:last-child { color: #047857; }
+  .year-table tr.minus td:last-child { color: #b91c1c; }
+  .year-table tr.flat td:last-child { color: #475569; }
+  .year-table tr.total td { border-top: 1px solid #cbd5e1; }
+  #chart { width: 100%; max-width: 100%; height: 300px; min-width: 0; }
+  @media (min-width: 1024px) {
+    #chart { height: clamp(220px, calc(100dvh - 24.5rem), 460px); }
+  }
+  @media (max-width: 700px) {
+    #chart { height: 260px; }
+  }
+  .card-body.summary-card { padding: 0.55rem 0.9rem 0.6rem; }
+  .card-body.chart-card { padding: 0.65rem 0.85rem 0.75rem; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.35rem 1rem;
+    align-items: end;
+  }
+  .summary-label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .summary-num {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .summary-num .around-word, #dock-group .around-word {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-right: 0.15rem;
+    vertical-align: 0.45em;
+  }
+  .summary-you .summary-num { font-size: clamp(1.55rem, 2.4vw, 2.05rem); color: #1d4ed8; }
+  .summary-peer .summary-num { font-size: clamp(1.25rem, 2vw, 1.55rem); color: #0f766e; }
+  .summary-us .summary-num { font-size: clamp(1.25rem, 2vw, 1.55rem); color: #92400e; }
+  .summary-sub { margin-top: 0.15rem; font-size: 0.82rem; color: #475569; }
+  #remain-line { margin: 0.15rem 0 0; font-size: 0.95rem; }
+  @media (max-width: 700px) {
+    .summary-grid { grid-template-columns: 1fr; gap: 0.65rem; }
+  }
+  .analysis { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.35rem; }
+  .story { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.35rem; }
+  .story h4 { margin: 0.45rem 0 0; font-size: 0.92rem; font-weight: 800; }
+  .story p { margin: 0; font-size: 0.9rem; line-height: 1.45; }
+  .chart-card .tabs.tabs-box { flex-wrap: wrap; }
+  .chart-card .tabs.tabs-box > .tab { flex: 1 1 auto; }
+  .chart-card .tabs.tabs-box > .tab-content { order: 1; flex-basis: 100%; width: 100%; min-width: 0; }
+  .a-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.9rem;
+    padding: 0.75rem 0.9rem;
+    background: #f8fafc;
+  }
+  .a-card h4 { margin: 0 0 0.35rem; font-size: 0.95rem; }
+  .a-card p { margin: 0.2rem 0 0; font-size: 0.88rem; }
+  .rate {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    align-items: center;
+    font-size: 0.82rem;
+    margin-top: 0.35rem;
+  }
+  .rate .bar { display: block; height: 0.5rem; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+  .rate .bar i { display: block; height: 100%; border-radius: 999px; }
+  .a-card b, .story b, .summary-num b, #result-about b, #remain-line b, #factors-note b, #dock-peer b, #dock-us b, .smoke-row b, .year-table b, .glossary b { font-weight: 800; }
+  .legend-item { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .glossary { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.25rem; font-size: 0.9rem; }
+  .glossary div { display: grid; grid-template-columns: minmax(7.5rem, 13rem) minmax(0, 1fr); gap: 0.35rem 0.85rem; }
+  .glossary dt { font-weight: 800; }
+  .glossary dd { margin: 0; color: #334155; }
+  @media (max-width: 640px) {
+    .glossary div { grid-template-columns: 1fr; gap: 0.1rem; }
+  }
+  .rate.you i { background: #2563eb; }
+  .rate.peer i { background: #0f766e; }
+  .rate.glob i { background: #d97706; }
+  .hundred { display: flex; height: 0.85rem; border-radius: 999px; overflow: hidden; background: #e2e8f0; margin: 0.45rem 0; }
+  .seg-never { background: #93c5fd; }
+  .seg-former { background: #fbbf24; }
+  .seg-current { background: #f87171; }
+  .seg-none { background: #f87171; }
+  .seg-some { background: #fbbf24; }
+  .seg-meets { background: #86efac; }
+  .hundred .is-you { box-shadow: inset 0 0 0 2px #0f2744; }
+  .smoke-row { display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.85rem; padding: 0.2rem 0; }
+  .smoke-row.is-you { font-weight: 700; }
+  input, select { font-size: 16px; }
+  .site-footer {
+    border-top: 1px solid #e2eaf6;
+    background: #fff;
+    color: #64748b;
+    text-align: center;
+    font-size: 0.88rem;
+    padding: 1.25rem 1rem 1.5rem;
+  }
+  #dock {
+    box-shadow: 0 -8px 24px rgba(15, 39, 68, 0.08);
+  }
+  @media (min-width: 1024px) {
+    .wrap { padding-bottom: 3rem; }
+  }
+</style>
+</head>
+<body data-unit="us">
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3v18M3 12h18" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <div>
+        <h1>Life Expectancy Calculator</h1>
+        <span>For education and entertainment. Not medical advice.</span>
+      </div>
+    </div>
+    <nav class="sources" aria-label="Sources of the figures">
+      <span class="sources-label">Sources</span>
+      <a class="source" href="https://stacks.cdc.gov/view/cdc/174591" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#005ea2"/><path d="M15 8h2v16h-2zM8 15h16v2H8z" fill="#fff"/></svg>
+        CDC
+      </a>
+      <a class="source" href="https://www.cdc.gov/nchs/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#0f766e"/><path d="M8 22V14h3v8H8zm6.5 0V10h3v12h-3zM21 22v-6h3v6h-3z" fill="#fff"/></svg>
+        NCHS
+      </a>
+      <a class="source" href="https://www.census.gov/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#1d4ed8"/><circle cx="12" cy="13" r="2.2" fill="#fff"/><circle cx="20" cy="13" r="2.2" fill="#fff"/><path d="M8 22c.6-3 2.4-4.4 4-4.4s3.4 1.4 4 4.4M16 22c.6-3 2.4-4.4 4-4.4s3.4 1.4 4 4.4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+        Census
+      </a>
+      <a class="source" href="https://www.nih.gov/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#1e3a8a"/><path d="M16 7c2 3 3 5 3 7.2a3 3 0 1 1-6 0C13 12 14 10 16 7z" fill="#fff"/><path d="M16 18.5V25" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+        NIH
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid gap-4 grid-cols-1 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] items-start min-w-0">
+    <form id="profile" class="card bg-base-100 shadow-sm min-w-0" autocomplete="off">
+      <div class="card-body gap-5">
+        <h2 class="card-title">Your profile</h2>
+        <p class="text-sm opacity-70 -mt-3">Yellow still needs an answer. Green is what you entered. Blue was filled in for you.</p>
+
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="age"><span class="font-semibold">Current age</span></label>
+            <span class="tooltip tooltip-left" data-tip="Age on your last birthday. The CDC table uses whole years.">
+              <button type="button" class="tip-btn" aria-label="About current age">i</button>
+            </span>
+          </div>
+          <input id="age" class="input w-full" type="number" inputmode="numeric" min="0" max="100" step="1" placeholder="Age" />
+          <input id="age-range" class="range range-primary range-xs mt-3" type="range" min="0" max="100" step="1" value="0" aria-label="Current age slider" />
+        </div>
+
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="sex"><span class="font-semibold">Sex</span></label>
+            <span class="tooltip tooltip-left" data-tip="NCHS publishes a separate life table for males and for females.">
+              <button type="button" class="tip-btn" aria-label="About sex">i</button>
+            </span>
+          </div>
+          <select id="sex" class="select w-full">
+            <option value="" selected>Select</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="group"><span class="font-semibold">Hispanic origin and race</span></label>
+            <span class="tooltip tooltip-left" data-tip="Official 2023 NCHS groups. The gaps follow death rates. They are not a biological ranking.">
+              <button type="button" class="tip-btn" aria-label="About origin and race">i</button>
+            </span>
+          </div>
+          <select id="group" class="select w-full">
+            <option value="" selected>Select</option>
+            <option value="total">U.S. total, all origins</option>
+            <option value="hispanic">Hispanic, any race</option>
+            <option value="aian">American Indian or Alaska Native, non-Hispanic</option>
+            <option value="asian">Asian, non-Hispanic</option>
+            <option value="black">Black, non-Hispanic</option>
+            <option value="white">White, non-Hispanic</option>
+            <option value="other">Another group or more than one race</option>
+          </select>
+        </div>
+
+        <div class="divider my-0">Body size</div>
+        <div class="flex items-center justify-between gap-3">
+          <span class="field-head flex-1">
+            <span class="font-semibold">Height and weight</span>
+            <span class="tooltip tooltip-left" data-tip="Choosing sex fills the measured U.S. average for that sex, adults 20 and older (CDC, 2015–2018). Change the numbers, or clear them to leave body size out.">
+              <button type="button" class="tip-btn" aria-label="About height and weight">i</button>
+            </span>
+          </span>
+          <div class="join">
+            <button type="button" id="unit-us" class="btn btn-sm join-item btn-primary">ft / lb</button>
+            <button type="button" id="unit-metric" class="btn btn-sm join-item">cm / kg</button>
+          </div>
+        </div>
+        <div id="us-height" class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="label" for="feet">Feet</label>
+            <input id="feet" class="input w-full" type="number" inputmode="numeric" min="1" max="8" step="1" placeholder="5" />
+          </div>
+          <div>
+            <label class="label" for="inches">Inches</label>
+            <input id="inches" class="input w-full" type="number" inputmode="decimal" min="0" max="11" step="0.1" placeholder="6" />
+          </div>
+        </div>
+        <div id="metric-height" class="hidden">
+          <label class="label" for="cm">Height (centimeters)</label>
+          <input id="cm" class="input w-full" type="number" inputmode="decimal" min="50" max="250" step="0.1" placeholder="168" />
+        </div>
+        <div>
+          <label class="label" for="weight" id="weight-label">Weight (pounds)</label>
+          <input id="weight" class="input w-full" type="number" inputmode="decimal" min="0" step="0.1" placeholder="Clear to leave body size out" />
+          <p id="bmi-readout" class="text-sm mt-2"></p>
+          <p class="text-sm opacity-70 mt-1">Sex fills the U.S. average: men 5 ft 9 in, 199.8 lb; women 5 ft 3.5 in, 170.8 lb.</p>
+        </div>
+
+        <div class="divider my-0">Earnings</div>
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="income"><span class="font-semibold">Personal income</span></label>
+            <span class="tooltip tooltip-left" data-tip="Own earnings, not a household. At age 40, income can raise or lower life expectancy by about 5 years for men and about 3 years for women. Blank leaves it out.">
+              <button type="button" class="tip-btn" aria-label="About personal income">i</button>
+            </span>
+          </div>
+          <select id="income" class="select w-full">
+            <option value="">Not specified. Leave income out.</option>
+            <option value="q1">Bottom quarter</option>
+            <option value="q2">Second quarter</option>
+            <option value="q3">Third quarter</option>
+            <option value="q4">Top quarter</option>
+          </select>
+          <p id="income-line" class="text-sm opacity-70 mt-1"></p>
+        </div>
+
+        <div class="divider my-0">Health</div>
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="smoke"><span class="font-semibold">Cigarette smoking</span></label>
+            <span class="tooltip tooltip-left" data-tip="Not specified keeps the U.S. mix of never, former, and current smokers.">
+              <button type="button" class="tip-btn" aria-label="About smoking">i</button>
+            </span>
+          </div>
+          <select id="smoke" class="select w-full">
+            <option value="">Not specified. Use the U.S. average.</option>
+            <option value="never">Never smoked cigarettes</option>
+            <option value="former10">Former smoker, quit more than 10 years ago</option>
+            <option value="recent">Former smoker, quit within the past 10 years</option>
+            <option value="current">Current cigarette smoker</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="activity"><span class="font-semibold">Leisure-time activity</span></label>
+            <span class="tooltip tooltip-left" data-tip="Movement you choose outside work, such as walking, sports, or cycling. A physical job is not counted. Not specified keeps the U.S. mix. The guideline is about 150 minutes a week of moderate activity, or 75 minutes of vigorous activity.">
+              <button type="button" class="tip-btn" aria-label="About leisure-time activity">i</button>
+            </span>
+          </div>
+          <select id="activity" class="select w-full">
+            <option value="">Not specified. Use the U.S. average.</option>
+            <option value="none">No leisure-time activity</option>
+            <option value="some">Some activity, under 150 minutes a week</option>
+            <option value="meets">Meets the guideline, about 150 minutes a week</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="copd"><span class="font-semibold">COPD</span></label>
+            <span class="tooltip tooltip-left" data-tip="COPD means chronic obstructive pulmonary disease. It is usually emphysema or chronic bronchitis, a lasting illness that makes it hard to empty the lungs. It is not a cold. Oxygen means you use oxygen at home, or you have been in the hospital for this illness. Applied from age 40. Not specified is not the same as no COPD.">
+              <button type="button" class="tip-btn" aria-label="About COPD">i</button>
+            </span>
+          </div>
+          <select id="copd" class="select w-full">
+            <option value="">Not specified. Use the U.S. average.</option>
+            <option value="no">Never diagnosed with COPD</option>
+            <option value="yes">Diagnosed, not on oxygen</option>
+            <option value="oxygen">On oxygen, or hospitalized for it</option>
+          </select>
+        </div>
+        <div>
+          <div class="field-head">
+            <label class="label py-1" for="kidney"><span class="font-semibold">Kidney disease</span></label>
+            <span class="tooltip tooltip-left" data-tip="Stage 3 means the kidneys filter less than they should. The filter number, called eGFR, is about 30 to 59, and you are not on dialysis. Dialysis is a machine or fluid treatment that does the work of failed kidneys. Stage 4 is not its own choice. If you are not on dialysis, use stage 3. Applied from age 40. Not specified is not the same as no kidney disease.">
+              <button type="button" class="tip-btn" aria-label="About kidney disease">i</button>
+            </span>
+          </div>
+          <select id="kidney" class="select w-full">
+            <option value="">Not specified. Use the U.S. average.</option>
+            <option value="no">No kidney disease</option>
+            <option value="stage3">Stage 3, not on dialysis</option>
+            <option value="failure">Kidney failure or dialysis</option>
+          </select>
+        </div>
+
+        <fieldset>
+          <div class="field-head mb-2">
+            <legend class="font-semibold">Conditions you have now</legend>
+            <span class="tooltip tooltip-left" data-tip="Leave unchecked if you are not using them. An empty box is not specified, not proof you do not have it.">
+              <button type="button" class="tip-btn" aria-label="About conditions">i</button>
+            </span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-3 items-center border border-base-300 rounded-box px-3 py-2">
+              <label class="flex gap-3 items-center flex-1 cursor-pointer" for="diabetes">
+                <input id="diabetes" class="checkbox checkbox-primary" type="checkbox" />
+                <span class="font-semibold">Diabetes</span>
+              </label>
+              <span class="tooltip tooltip-left" data-tip="Type 1 or type 2, diagnosed. Applied from age 30.">
+                <button type="button" class="tip-btn" aria-label="About diabetes">i</button>
+              </span>
+            </div>
+            <div class="flex gap-3 items-center border border-base-300 rounded-box px-3 py-2">
+              <label class="flex gap-3 items-center flex-1 cursor-pointer" for="mi">
+                <input id="mi" class="checkbox checkbox-primary" type="checkbox" />
+                <span class="font-semibold">Prior heart attack</span>
+              </label>
+              <span class="tooltip tooltip-left" data-tip="A past myocardial infarction. Applied from age 30.">
+                <button type="button" class="tip-btn" aria-label="About heart attack">i</button>
+              </span>
+            </div>
+            <div class="flex gap-3 items-center border border-base-300 rounded-box px-3 py-2">
+              <label class="flex gap-3 items-center flex-1 cursor-pointer" for="stroke">
+                <input id="stroke" class="checkbox checkbox-primary" type="checkbox" />
+                <span class="font-semibold">Prior stroke</span>
+              </label>
+              <span class="tooltip tooltip-left" data-tip="A past stroke, not a brief scare you were told was not one.">
+                <button type="button" class="tip-btn" aria-label="About stroke">i</button>
+              </span>
+            </div>
+            <div class="flex gap-3 items-center border border-base-300 rounded-box px-3 py-2">
+              <label class="flex gap-3 items-center flex-1 cursor-pointer" for="other">
+                <input id="other" class="checkbox checkbox-primary" type="checkbox" />
+                <span class="font-semibold">Another serious illness</span>
+              </label>
+              <span class="tooltip tooltip-left" data-tip="Cancer, or an illness not listed above. COPD and kidney disease have their own questions. This box does not move the number.">
+                <button type="button" class="tip-btn" aria-label="About other serious illness">i</button>
+              </span>
+            </div>
+          </div>
+        </fieldset>
+
+        <div id="error" class="alert alert-error hidden" role="alert"></div>
+
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="example" class="btn btn-primary btn-sm rounded-full">Load a higher-risk example</button>
+          <button type="button" id="reset" class="btn btn-ghost btn-sm">Reset</button>
+        </div>
+      </div>
+    </form>
+
+    <section id="results" class="flex flex-col gap-2 min-w-0 lg:sticky lg:top-2" aria-live="polite">
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body summary-card gap-2">
+          <p class="kicker" id="profile-line">CDC life table</p>
+          <div class="summary-grid">
+            <div class="summary-you">
+              <div class="summary-label">You are</div>
+              <div class="summary-num" id="result-group">—</div>
+              <div class="summary-sub" id="result-about">Enter age, sex, and origin.</div>
+            </div>
+            <div class="summary-peer">
+              <div class="summary-label">Peers
+                <span class="tooltip tooltip-top" data-tip="Peers match your age, sex, and origin on the CDC table. Height, weight, activity, smoking, illness, and personal income are left out.">
+                  <button type="button" class="tip-btn hidden" id="peer-tip" aria-label="What peers means">i</button>
+                </span>
+              </div>
+              <div class="summary-num" id="peer-median">—</div>
+            </div>
+            <div class="summary-us">
+              <div class="summary-label">U.S. all people</div>
+              <div class="summary-num" id="us-median"></div>
+            </div>
+          </div>
+          <p id="remain-line"></p>
+          <div id="warn-other" class="disclaimer hidden">Serious illness is checked and is not in the number. Read the range as a ceiling for that history.</div>
+          <div id="warn-age" class="text-sm opacity-80 hidden"></div>
+          <div id="warn-stack" class="disclaimer hidden">Several high-risk items are on at once. They overlap, so the rows under the chart do not add.</div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body chart-card">
+          <div class="field-head mb-1">
+            <h2 class="font-semibold text-sm">Where the deaths fall</h2>
+            <span class="tooltip tooltip-left" data-tip="Amber is everyone in the U.S. Teal is peers: your age, sex, and origin, without height, weight, activity, smoking, illness, or personal income. Blue is you, with those added. The line height is how many of 100 die at that age. The red dashed line is your current age.">
+              <button type="button" class="tip-btn" aria-label="About the chart">i</button>
+            </span>
+          </div>
+          <div class="min-w-0 overflow-hidden">
+            <div id="chart" role="img" aria-label="Share of deaths by age. The line height is how many of 100 die at that age. Bands show you, your peers, and the U.S. all-people range."></div>
+          </div>
+          <p class="text-sm mt-2 flex flex-wrap gap-x-4 gap-y-1 items-center">
+            <span class="legend-item"><i class="swatch" style="background: rgba(37,99,235,0.45)"></i>You
+              <span class="tooltip tooltip-top" data-tip="Your median and average age at death, after height, weight, activity, smoking, illness, and personal income.">
+                <button type="button" class="tip-btn" aria-label="What you means">i</button>
+              </span>
+            </span>
+            <span class="legend-item"><i class="swatch" style="background: rgba(15,118,110,0.45)"></i>Peers
+              <span class="tooltip tooltip-top" data-tip="Same age, sex, and origin on the CDC table. Height, weight, activity, smoking, illness, and personal income are left out.">
+                <button type="button" class="tip-btn" aria-label="What peers means">i</button>
+              </span>
+            </span>
+            <span class="legend-item"><i class="swatch" style="background: rgba(245,158,11,0.55)"></i>U.S. all people
+              <span class="tooltip tooltip-top" data-tip="Men’s median age at death to women’s, for everyone in the U.S. It moves with your age only.">
+                <button type="button" class="tip-btn" aria-label="What U.S. all people means">i</button>
+              </span>
+            </span>
+            <span class="legend-item"><i class="swatch swatch-now"></i>Current age
+              <span class="tooltip tooltip-top" data-tip="The red dashed line is the age you entered.">
+                <button type="button" class="tip-btn" aria-label="What the current age line means">i</button>
+              </span>
+            </span>
+          </p>
+          <div role="tablist" class="tabs tabs-box tabs-sm mt-2 w-full min-w-0">
+            <input type="radio" name="chart-panels" class="tab" aria-label="Your Analysis" checked />
+            <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-3 sm:p-4">
+              <h3 class="font-semibold">Your analysis</h3>
+              <div id="story" class="story"></div>
+            </div>
+            <input type="radio" name="chart-panels" class="tab" aria-label="Years vs the Median" />
+            <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-3 sm:p-4">
+              <h3 class="font-semibold">Your years vs the median</h3>
+              <div class="overflow-x-auto mt-2">
+                <table class="table table-sm year-table">
+                  <thead>
+                    <tr><th>Factor</th><th>Your years</th></tr>
+                  </thead>
+                  <tbody id="factors"></tbody>
+                </table>
+              </div>
+              <p id="factors-note" class="text-sm opacity-70 mt-2"></p>
+            </div>
+            <input type="radio" name="chart-panels" class="tab" aria-label="Stats Breakdown" />
+            <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-3 sm:p-4">
+              <h3 class="font-semibold">Stats breakdown</h3>
+              <div id="analysis" class="analysis"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="mt-10" aria-label="Notes">
+    <div role="tablist" class="tabs tabs-box tabs-sm">
+      <input type="radio" name="notes" class="tab" aria-label="How to read this" checked />
+      <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-4 sm:p-6">
+        <ul class="list-disc pl-5 flex flex-col gap-1 text-sm">
+          <li>The big number runs from your median age at death to the average, rounded to the nearest year. Around 68–69 means those two ages.</li>
+          <li>Amber is the U.S. all-people range: men’s median age at death to women’s. It moves with age, and it stays put when sex, origin, body size, health, or personal income change. Teal is peers of your age, sex, and origin on the CDC table. Height, weight, activity, smoking, illness, and personal income are not in that band. Blue is you, including those. The red dashed line is your current age.</li>
+          <li>The line’s height is how many of <b>100</b> people in your group die at that age. It is a share of the life table, not a census count.</li>
+          <li>Blank fields leave the CDC table. A filled field shows your years added (+) or removed (−) from your peers’ median, in the table under the chart.</li>
+          <li>For education and entertainment. A population model, not a forecast for you and not medical advice. Nothing you type leaves this browser. The marks at the top name the public data. They are not an endorsement.</li>
+        </ul>
+      </div>
+      <input type="radio" name="notes" class="tab" aria-label="Methods" />
+      <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-4 sm:p-6">
+          <div class="flex flex-col gap-3 text-sm">
+    <div class="flex flex-col gap-3">
+      <p>
+        The base is the complete period life table for 2023 from the National Center for Health Statistics.
+        A period table applies this year’s death rates at every age to a hypothetical group. It does not guess future medical gains.
+        NCHS built the rates from final 2023 deaths, Medicare records at the oldest ages, and July 1, 2023 population estimates from the U.S. Census Bureau’s blended base.
+        The Census Bureau supplies the population denominator. It does not publish this life expectancy itself.
+      </p>
+      <p>
+        Life expectancy is an average age at death, counting years left from the birthday you entered.
+        The median is the age half of that life table lives past.
+        The headline rounds those two ages to the nearest year. Around 68–69 means a median of 68 and an average of 69. A tenth of a year would look more exact than this estimate is.
+      </p>
+      <p>
+        With no body size, smoking, or condition filled in, the result is the CDC table. Checked health details multiply the chance of dying in each future year, using
+        <span class="font-mono text-sm">1 − (1 − q)<sup>h</sup></span>,
+        where q is the CDC probability for that year of age and h is a hazard ratio from the studies below.
+        The ratio is scaled so a person who matches today’s U.S. mix of smokers, activity, and body sizes stays on the CDC table.
+      </p>
+      <div class="overflow-x-auto">
+        <table class="table table-sm bg-base-100 rounded-box">
+          <thead>
+            <tr><th>Input</th><th>Published anchor</th><th>What the page does</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Age, sex, origin and race</td>
+              <td>NCHS life tables, 2023</td>
+              <td>Selects one of 12 sex-by-group tables. “Another group” uses the U.S. total, because NCHS does not publish a separate complete table for it.</td>
+            </tr>
+            <tr>
+              <td>Height and weight</td>
+              <td>Global BMI Mortality Collaboration, Lancet, 2016. CDC adult BMI categories. NHANES measured percentiles, August 2021–August 2023. NCHS measured mean height and weight, adults 20 and older, 2015–2018.</td>
+              <td>BMI from 20 to 25 is the reference. Above 25, risk rises by 1.29 times per 5 BMI points, the North America slope, a bit steeper for men than women, and weaker after midlife. Applied from age 35. The U.S. average uses the published NHANES percentiles from the 5th through the 95th. The 1st and 99th points, men 18.5 and 50 and women 17.5 and 52, only close the tails. They are not published NHANES percentiles. Choosing sex fills the measured means: men 69.0 inches and 199.8 pounds, women 63.5 inches and 170.8 pounds. Clear the fields to leave body size out.</td>
+            </tr>
+            <tr>
+              <td>Smoking</td>
+              <td>CDC: smokers lose at least 10 years versus people who never smoked. Le and colleagues, American Journal of Preventive Medicine, 2024, for the age pattern.</td>
+              <td>Current, long-quit, and recent-quit hazards are set so the gap versus never-smokers lands within about a year of those published gaps from ages 35 to 75. The mix used here is about 67% never, 22% former, and 11% current. Only current smoking is the published NHIS figure, 11.0% in 2023.</td>
+            </tr>
+            <tr>
+              <td>Diabetes</td>
+              <td>Emerging Risk Factors Collaboration, New England Journal of Medicine, 2011. Hazard ratio 1.80 versus no diabetes, already adjusted for smoking and BMI. About 6 years of life lost at age 50 in that study.</td>
+              <td>Applied from age 30, then divided by the U.S. prevalence factor (12% of the population has diabetes, diagnosed or undiagnosed) so the CDC average is unchanged. On the 2023 U.S. total table, at age 50, the median is about 4 years earlier for women and about 5 years earlier for men than others the same age and sex, and about 5 years earlier for women and about 6 years earlier for men than someone without diabetes. The 2011 study’s figure was about 6 years versus someone without diabetes. A diagnosis in early adulthood can take more years than this average.</td>
+            </tr>
+            <tr>
+              <td>Heart attack or stroke</td>
+              <td>Emerging Risk Factors Collaboration, JAMA, 2015. About 2.0 after a heart attack and 2.1 after a stroke, versus people with neither, adjusted for age and sex.</td>
+              <td>Applied from age 30 on top of the U.S. average rate. That is slightly cautious, because the average already includes some people with those histories. Two conditions together are pulled a little under a full product, matching that paper.</td>
+            </tr>
+            <tr>
+              <td>Leisure-time activity</td>
+              <td>Arem and colleagues, JAMA Internal Medicine, 2015. Versus no leisure-time activity: some activity under 7.5 MET-hours a week, hazard 0.80; meeting the guideline at 1 to 2 times the minimum, hazard 0.69. CDC, NHIS 2024: 26.2% do no leisure-time activity and 47.2% meet the aerobic guideline. The rest, 26.6%, is the remainder.</td>
+              <td>Applied from age 18. The three hazards are divided by that U.S. mix, so an average adult stays on the CDC table. Everyone who meets the guideline uses 0.69. Extra activity past the guideline is not a separate choice. A physical job is not counted. Not specified keeps the mix. Activity is scaled like smoking, outside the overlap reduction used for illnesses.</td>
+            </tr>
+            <tr>
+              <td>COPD</td>
+              <td>Zhao and colleagues, International Journal of COPD, 2025, 27 cohorts. Within the same smoking status, diagnosed COPD is 1.41 for people who never smoked, 1.37 for former smokers, and 1.48 for current smokers. Severe COPD is 2.18. The unadjusted overall 1.80 is not used. NCHS, NHIS 2023: 3.8% of adults have diagnosed COPD. Women 4.1%, men 3.4%.</td>
+              <td>Applied from age 40. The diagnosed hazard is divided by a factor that uses 3.8% and a base hazard of 1.45, so the U.S. average stays on the CDC table. If smoking is not specified, diagnosed COPD uses 1.45. On oxygen or hospitalized uses 2.18. When the person also smokes now or quit within 10 years, that severe hazard is reduced the same way as a heart attack or stroke. Oxygen has no separate share of the population in this correction. Never diagnosed is a small credit. Not specified is not a credit.</td>
+            </tr>
+            <tr>
+              <td>Kidney disease</td>
+              <td>Writing Group for the CKD Prognosis Consortium, JAMA, 2023. Filter rate 45 to 59 versus 90 to 104, with some albumin in the urine (10 to 29), all-cause hazard 1.6. With almost no albumin, that hazard is 1.3. Go and colleagues, New England Journal of Medicine, 2004. Filter rate under 15 versus 60 or higher, all-cause hazard 5.9. NHANES 2017–March 2020: stage 3 is 5.1% of adults, stage 4 is 0.3%, and stage 5 is 0.2%.</td>
+              <td>Applied from age 40. Stage 3, not on dialysis, uses 1.6. That is the stage 3a figure with some albumin, so later stage 3 and stage 4 are understated. Stage 4 is not its own choice. Kidney failure or dialysis uses 5.9, the closest published bucket, and the prevalence correction uses the 0.2% in stage 5. The hazards are divided by the U.S. mix of those two groups. COPD and kidney disease join the same small overlap reduction used when two or more illnesses are on. Never having it is a small credit. Not specified is not a credit. The CDC 14% figure is stages 1 through 4 and is shown only as a comparison, not as this hazard.</td>
+            </tr>
+            <tr>
+              <td>Personal income</td>
+              <td>Chetty, Stepner, Abraham, and colleagues, JAMA, 2016. Individual earnings in tax records, ranked within sex and age, ages 40 to 76, deaths in 2001–2014. Online table 16. Not household income. The household gap in that paper, 14.6 years for men and 10.1 for women between the richest 1% and the poorest 1%, is not the figure used here.</td>
+              <td>Four quarters of people your sex and age. The hazard is that quarter’s death rate divided by the rate for everyone of that sex and age, pooled across those years. It changes with age and is held at the age-76 value after that. Before age 40 it is not applied. At age 40, income can raise or lower life expectancy by about 5 years for men and about 3 years for women. Dollar hints are the quarter’s average own earnings in 2012 dollars, restated with the CPI-U annual average (2012 = 229.594, 2024 = 313.689). Blank leaves the mix. The association already includes smoking, body size, and origin, so the row overlaps those.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Your analysis, the first tab under the chart, is written from the fields you fill. Stats breakdown, the third tab, compares you with peers and with everyone in the U.S. Those shares are published counts. They are separate from the hazard model.
+        Obesity by group is age-adjusted for adults 20 and older, NHANES August 2021–August 2023. There is no median BMI by race here, so your BMI is compared with the U.S. median for your sex.
+        The cigarette bar is this page’s mix: 67 of 100 never smoked, 22 have quit, and 11 smoke now. Only current smoking is the published NHIS figure, 11.0% in 2023. The two quit choices share that 22.
+        Diabetes peers are age-adjusted adults. The U.S. line is 12% of everyone, diagnosed or not. The American Indian and Alaska Native figure is diagnosed only.
+        Heart attack and stroke shares are adults 20 and older, NHANES 2017–March 2020, from the American Heart Association 2025 statistics.
+        That table has no obesity, heart-attack, or stroke figure for American Indian and Alaska Native adults.
+        The activity bar is 26 of 100 with no leisure-time activity, 27 with some, and 47 who meet the guideline. A peer line for meeting the aerobic guideline is a different count from that inactive share.
+        Diagnosed COPD is 3.8% of U.S. adults. By origin it is White 4.4%, Black 3.5%, Hispanic 2.0%, and Asian 1.0%. There is no separate COPD figure here for American Indian and Alaska Native adults.
+        Kidney stage shares are stage 3 at 5.1%, stage 4 at 0.3%, and stage 5 at 0.2%. The chronic kidney disease bars are stages 1 through 4, which is a wider group than the stage 3 hazard.
+      </p>
+      <p>
+        Left out on purpose: blood pressure, cholesterol, cancer site and stage, medicines, family history, marital status, and place.
+        Those move a real lifespan, and a single checkbox would fake a precision the studies do not support. State of residence stays out. In the 2022 NCHS state life tables, Hawaii is 80.0 years at birth and West Virginia is 72.2.
+        Race and Hispanic origin stay in because you asked for the official tables. NCHS adjusts those tables for misclassification on the death certificate. The gaps mix smoking, work, place, and access to care.
+      </p>
+      <p class="text-sm opacity-70">
+        Life expectancy at birth in these tables: 75.8 years for males and 81.1 for females in the U.S. total;
+        Hispanic 78.5 and 84.0; American Indian and Alaska Native non-Hispanic 66.7 and 73.5;
+        Asian non-Hispanic 83.2 and 87.1; Black non-Hispanic 70.3 and 77.6; White non-Hispanic 76.0 and 80.9.
+      </p>
+    </div>
+          </div>
+        </div>
+        <input type="radio" name="notes" class="tab" aria-label="Sources" />
+        <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-4 sm:p-6">
+          <div class="text-sm">
+    <ul class="list-disc pl-5 flex flex-col gap-1 text-sm">
+      <li><a class="link link-primary" href="https://stacks.cdc.gov/view/cdc/174591" target="_blank" rel="noopener">Arias, Xu, and Kochanek. United States Life Tables, 2023. National Vital Statistics Reports, vol. 74, no. 6. July 15, 2025.</a> Spreadsheets: <a class="link link-primary" href="https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/NVSR/74-06/" target="_blank" rel="noopener">CDC FTP, NVSR 74-06</a>.</li>
+      <li><a class="link link-primary" href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(16)30175-1/fulltext" target="_blank" rel="noopener">Global BMI Mortality Collaboration. Body-mass index and all-cause mortality. Lancet. 2016.</a></li>
+      <li><a class="link link-primary" href="https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html" target="_blank" rel="noopener">CDC adult BMI categories.</a></li>
+      <li><a class="link link-primary" href="https://www.cdc.gov/nchs/products/databriefs/db508.htm" target="_blank" rel="noopener">NCHS Data Brief 508. Adult obesity, August 2021–August 2023.</a> Age-adjusted obesity by group is in the <a class="link link-primary" href="https://www.ncbi.nlm.nih.gov/books/NBK621182/table/hestat111.t3/" target="_blank" rel="noopener">companion Health E-Stat, Table 3</a>.</li>
+      <li><a class="link link-primary" href="https://stacks.cdc.gov/view/cdc/100478" target="_blank" rel="noopener">Fryar and colleagues. Anthropometric reference data for children and adults: United States, 2015–2018. NCHS.</a> Measured means for adults 20 and older: men 69.0 inches and 199.8 pounds, women 63.5 inches and 170.8 pounds. <a class="link link-primary" href="https://www.cdc.gov/nchs/fastats/body-measurements.htm" target="_blank" rel="noopener">NCHS FastStats, body measurements</a>.</li>
+      <li><a class="link link-primary" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12256702/" target="_blank" rel="noopener">Martin and colleagues. 2025 Heart Disease and Stroke Statistics. Circulation. 2025.</a> Heart attack and stroke shares, NHANES 2017–March 2020.</li>
+      <li><a class="link link-primary" href="https://www.nejm.org/doi/full/10.1056/NEJMoa1008862" target="_blank" rel="noopener">Emerging Risk Factors Collaboration. Diabetes mellitus, fasting glucose, and risk of cause-specific death. NEJM. 2011.</a></li>
+      <li><a class="link link-primary" href="https://jamanetwork.com/journals/jama/fullarticle/2382980" target="_blank" rel="noopener">Emerging Risk Factors Collaboration. Association of cardiometabolic multimorbidity with mortality. JAMA. 2015.</a></li>
+      <li><a class="link link-primary" href="https://doi.org/10.1016/j.amepre.2024.06.020" target="_blank" rel="noopener">Le TT, Mendez D, Warner KE. The Benefits of Quitting Smoking at Different Ages. American Journal of Preventive Medicine. 2024.</a></li>
+      <li><a class="link link-primary" href="https://www.cdc.gov/diabetes/php/data-research/index.html" target="_blank" rel="noopener">CDC National Diabetes Statistics Report. 2023 estimates: 12.0% of the U.S. population has diabetes.</a></li>
+      <li><a class="link link-primary" href="https://www.nejm.org/doi/full/10.1056/NEJMsa1211128" target="_blank" rel="noopener">Jha and colleagues. 21st-century hazards of smoking and benefits of cessation. NEJM. 2013.</a></li>
+      <li><a class="link link-primary" href="https://progressreport.cancer.gov/prevention/tobacco/adult_smoking" target="_blank" rel="noopener">National Cancer Institute, Cancer Trends Progress Report. Adult cigarette smoking, NHIS 2023: 11.0%.</a></li>
+      <li><a class="link link-primary" href="https://pubmed.ncbi.nlm.nih.gov/25844730/" target="_blank" rel="noopener">Arem and colleagues. Leisure time physical activity and mortality. JAMA Internal Medicine. 2015.</a></li>
+      <li><a class="link link-primary" href="https://www.cdc.gov/active-people-healthy-nation/php/data-research/index.html" target="_blank" rel="noopener">CDC Active People, Healthy Nation. NHIS 2024: 26.2% of adults are inactive.</a> Met the aerobic guideline, 47.2%: <a class="link link-primary" href="https://www.cdc.gov/nchs/products/databriefs/db555.htm" target="_blank" rel="noopener">NCHS Data Brief 555, 2024</a>.</li>
+      <li><a class="link link-primary" href="https://pubmed.ncbi.nlm.nih.gov/41488396/" target="_blank" rel="noopener">Zhao and colleagues. All-cause and cause-specific mortality in chronic obstructive pulmonary disease. International Journal of COPD. 2025.</a></li>
+      <li><a class="link link-primary" href="https://www.cdc.gov/nchs/products/databriefs/db529.htm" target="_blank" rel="noopener">Weeks and Elgaddal. Chronic obstructive pulmonary disease in adults age 18 and older: United States, 2023. NCHS Data Brief 529.</a> Stacks copy: <a class="link link-primary" href="https://stacks.cdc.gov/view/cdc/174596" target="_blank" rel="noopener">cdc/174596</a>.</li>
+      <li><a class="link link-primary" href="https://doi.org/10.1001/jama.2023.17002" target="_blank" rel="noopener">Writing Group for the CKD Prognosis Consortium. Estimated glomerular filtration rate, albuminuria, and adverse outcomes. JAMA. 2023.</a></li>
+      <li><a class="link link-primary" href="https://www.nejm.org/doi/full/10.1056/NEJMoa041031" target="_blank" rel="noopener">Go and colleagues. Chronic kidney disease and the risks of death, cardiovascular events, and hospitalization. NEJM. 2004.</a></li>
+      <li><a class="link link-primary" href="https://www.ajkd.org/article/S0272-6386(22)01094-0/pdf" target="_blank" rel="noopener">USRDS and AJKD. CKD in the general population. NHANES 2017–March 2020: stage 3, 5.1%; stage 4, 0.3%; stage 5, 0.2%.</a></li>
+      <li><a class="link link-primary" href="https://archive.cdc.gov/www_cdc_gov/kidney-disease/php/data-research/index.html" target="_blank" rel="noopener">CDC. Chronic Kidney Disease in the United States, 2023. Stages 1–4: 14% of adults.</a></li>
+      <li><a class="link link-primary" href="https://jamanetwork.com/journals/jama/fullarticle/2513561" target="_blank" rel="noopener">Chetty, Stepner, Abraham, and colleagues. The association between income and life expectancy in the United States, 2001–2014. JAMA. 2016.</a> Individual-income death rates: <a class="link link-primary" href="https://healthinequality.org/data/" target="_blank" rel="noopener">online table 16</a>.</li>
+      <li><a class="link link-primary" href="https://fred.stlouisfed.org/series/CPIAUCNS" target="_blank" rel="noopener">BLS CPI-U, U.S. city average, all items, annual average. 2012 = 229.594. 2024 = 313.689.</a></li>
+    </ul>
+          </div>
+        </div>
+        <input type="radio" name="notes" class="tab" aria-label="Glossary" />
+        <div role="tabpanel" class="tab-content bg-base-100 border-base-300 p-4 sm:p-6">
+          <dl class="glossary">
+            <div>
+              <dt>You</dt>
+              <dd>Your median and average age at death, after height, weight, activity, smoking, illness, and personal income when you set it.</dd>
+            </div>
+            <div>
+              <dt>Peers</dt>
+              <dd>People your age, sex, and origin on the CDC table. Height, weight, activity, smoking, illness, and personal income are left out.</dd>
+            </div>
+            <div>
+              <dt>U.S. all people</dt>
+              <dd>Men’s median age at death to women’s, for everyone. It moves when your age changes, and it stays put for sex, origin, and health.</dd>
+            </div>
+            <div>
+              <dt>Line height</dt>
+              <dd>How many of <b>100</b> people in your group die at that age. A share of the life table, not a count of real people. The colored bands mark ages, not heights.</dd>
+            </div>
+            <div>
+              <dt>Median</dt>
+              <dd>The age half of that life table lives past.</dd>
+            </div>
+            <div>
+              <dt>Average</dt>
+              <dd>The mean age at death on that table. The headline runs from the lower of median and average to the higher, each rounded to the nearest year.</dd>
+            </div>
+            <div>
+              <dt>Years left</dt>
+              <dd>Remaining life expectancy from the age you entered, rounded to the nearest year.</dd>
+            </div>
+            <div>
+              <dt>Your years vs the median</dt>
+              <dd>How many years each entered factor adds to or removes from your peers’ CDC median. That median is the table for your age, sex, and origin. Personal income is included when you set it.</dd>
+            </div>
+            <div>
+              <dt>Total</dt>
+              <dd>Every counted factor at once. It is not the sum of the rows. Overlapping risks do not add.</dd>
+            </div>
+            <div>
+              <dt>BMI</dt>
+              <dd>Body mass index from your height and weight. The comparison median is U.S. men or U.S. women of all origins. There is no median BMI by race on this page.</dd>
+            </div>
+            <div>
+              <dt>of 100</dt>
+              <dd>The line height. <b>100</b> is the whole life-table group, not a count of real people.</dd>
+            </div>
+            <div>
+              <dt>Not specified</dt>
+              <dd>A field left blank. A blank is not treated as healthier than average.</dd>
+            </div>
+            <div>
+              <dt>Personal income</dt>
+              <dd>Your own earnings, not a household. At age 40, income can raise or lower life expectancy by about <b>5 years</b> for men and about <b>3 years</b> for women. Counted from age 40.</dd>
+            </div>
+            <div>
+              <dt>Another serious illness</dt>
+              <dd>Cancer, or an illness that does not have its own question. COPD and kidney disease are separate questions. This box does not move the median.</dd>
+            </div>
+            <div>
+              <dt>COPD</dt>
+              <dd>Chronic obstructive pulmonary disease. Usually emphysema or chronic bronchitis. A lasting illness that makes it hard to empty the lungs. It is not a cold or a short chest infection.</dd>
+            </div>
+            <div>
+              <dt>Emphysema</dt>
+              <dd>A kind of COPD. The air sacs in the lungs are damaged, so old air stays trapped.</dd>
+            </div>
+            <div>
+              <dt>Chronic bronchitis</dt>
+              <dd>A kind of COPD. The airways stay inflamed and make extra mucus for a long time. It is not one winter cold.</dd>
+            </div>
+            <div>
+              <dt>Long-term oxygen</dt>
+              <dd>Oxygen used at home because the lungs no longer keep the blood oxygen high enough. On this page it is grouped with a hospital stay for COPD.</dd>
+            </div>
+            <div>
+              <dt>Leisure-time activity</dt>
+              <dd>Movement you choose outside work, such as walking, sports, or cycling. A physical job is not counted. Not specified keeps the U.S. mix.</dd>
+            </div>
+            <div>
+              <dt>Activity guideline</dt>
+              <dd>About <b>150</b> minutes a week of moderate activity, such as a brisk walk, or <b>75</b> minutes of vigorous activity. Meeting it uses the published hazard for 1 to 2 times that minimum. More than that is not a separate choice.</dd>
+            </div>
+            <div>
+              <dt>Kidney disease stage 3</dt>
+              <dd>The kidneys filter less than they should. The filter number, eGFR, is about <b>30 to 59</b>. This choice is not dialysis. Stage 4 is not its own choice. If you are not on dialysis, the page uses the stage 3 hazard. That hazard is the stage 3a figure with some albumin in the urine, so later stage 3 is understated.</dd>
+            </div>
+            <div>
+              <dt>Dialysis</dt>
+              <dd>A machine or fluid treatment that does the work of failed kidneys. On this page it is grouped with kidney failure.</dd>
+            </div>
+            <div>
+              <dt>eGFR</dt>
+              <dd>Estimated glomerular filtration rate. A blood-test estimate of how well the kidneys filter. About <b>90</b> or higher is the usual reference here. Stage 3 is about <b>30 to 59</b>. The kidney-failure study used here is under <b>15</b>.</dd>
+            </div>
+            <div>
+              <dt>Current age</dt>
+              <dd>The age you entered. The red dashed line marks it.</dd>
+            </div>
+            <div>
+              <dt>Origin</dt>
+              <dd>The NCHS group on the life table: Hispanic origin and race. It is a statistical death-rate group, not a biological ranking.</dd>
+            </div>
+          </dl>
+        </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>For Education and Entertainment Purposes. 2023 NCHS life tables, with a model on top. Not for clinical use.</p>
+</footer>
+
+<div id="dock" class="lg:hidden fixed inset-x-0 bottom-0 z-30 border-t border-base-300 bg-base-100/95 backdrop-blur px-4 py-3">
+  <div class="text-xs uppercase tracking-wide opacity-60">You are</div>
+  <div class="flex items-end justify-between gap-3">
+    <div>
+      <div class="display-num text-4xl" id="dock-group">—</div>
+      <div class="text-xs font-semibold text-teal-800" id="dock-peer"></div>
+      <div class="text-xs font-semibold text-amber-800" id="dock-us"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.LIFE = {"source": "NCHS NVSR Volume 74 Number 6, United States Life Tables, 2023", "qx": {"total|male": [0.00602267, 0.00048141, 0.00033232, 0.00023728, 0.00017943, 0.00016528, 0.00015138, 0.00013896, 0.00012172, 0.0001012, 8.721e-05, 9.681e-05, 0.00014979, 0.00025557, 0.00039712, 0.00055131, 0.00069779, 0.00083338, 0.0009525, 0.00106079, 0.00117532, 0.00129481, 0.00140078, 0.00148725, 0.00156004, 0.00162518, 0.00169652, 0.0017832, 0.00189005, 0.00200786, 0.00212701, 0.00223706, 0.0023359, 0.00242282, 0.00250468, 0.00258791, 0.00267994, 0.00278432, 0.00290296, 0.00303175, 0.00317622, 0.00332558, 0.00346403, 0.00358837, 0.00371379, 0.00386181, 0.00405162, 0.00428428, 0.00455679, 0.00485904, 0.00518182, 0.00553519, 0.00593797, 0.00641085, 0.00696007, 0.00754856, 0.00818283, 0.00890896, 0.00972128, 0.01058132, 0.01145679, 0.01233311, 0.01322253, 0.01414721, 0.01513181, 0.01619646, 0.01749392, 0.0186952, 0.01998532, 0.02135995, 0.02264188, 0.02431731, 0.02617006, 0.02832821, 0.03078659, 0.0335218, 0.03602767, 0.04060728, 0.0440198, 0.04934811, 0.05416397, 0.06104041, 0.06803373, 0.07518155, 0.08286203, 0.09216027, 0.103004, 0.11546379, 0.12908563, 0.14389497, 0.15989795, 0.17707783, 0.19539185, 0.21476911, 0.23510934, 0.25628346, 0.27813551, 0.30048651, 0.32313979, 0.34588772, 1.0], "total|female": [0.0051322, 0.00039425, 0.00023205, 0.00018716, 0.00014182, 0.00013253, 0.0001192, 0.00010998, 0.000103, 9.823e-05, 9.755e-05, 0.00010447, 0.00012305, 0.00015496, 0.00019603, 0.00024142, 0.00028605, 0.00032819, 0.0003664, 0.00040246, 0.00044258, 0.00048554, 0.00052397, 0.00055544, 0.00058318, 0.00060862, 0.00064008, 0.00068544, 0.00074809, 0.00082131, 0.00089841, 0.00097114, 0.00103684, 0.00109449, 0.00114939, 0.00120567, 0.00127026, 0.00134798, 0.00144105, 0.00154448, 0.0016604, 0.00177793, 0.00188333, 0.00197251, 0.0020572, 0.00215336, 0.00227738, 0.0024329, 0.0026208, 0.00283212, 0.0030623, 0.00330866, 0.0035717, 0.00385843, 0.00417894, 0.00451932, 0.00489728, 0.0053476, 0.00587277, 0.006443, 0.0070337, 0.00762483, 0.00821599, 0.008816, 0.00944832, 0.01013493, 0.01096076, 0.01178194, 0.01269627, 0.0137278, 0.01475506, 0.0160663, 0.0175239, 0.019299, 0.0213258, 0.02371168, 0.02591444, 0.02944702, 0.03241964, 0.03645044, 0.04049276, 0.04555739, 0.05102471, 0.05690359, 0.06411833, 0.0709313, 0.08025332, 0.09061413, 0.10207969, 0.11470713, 0.12854096, 0.14360911, 0.15991868, 0.17745212, 0.19616376, 0.21597742, 0.23678519, 0.25844806, 0.28079823, 0.30364355, 1.0], "hispanic|male": [0.00540596, 0.00042957, 0.00027852, 0.00019506, 0.000161, 0.00013852, 0.000127, 0.00011535, 9.725e-05, 7.44e-05, 5.69e-05, 6.226e-05, 0.00011065, 0.00021169, 0.0003482, 0.00049823, 0.00064013, 0.00076983, 0.00088269, 0.00098685, 0.00109512, 0.00121381, 0.00133763, 0.00146495, 0.001592, 0.0017203, 0.00184435, 0.00195157, 0.0020343, 0.00209635, 0.00215029, 0.00220229, 0.00224817, 0.00229057, 0.00233236, 0.0023702, 0.00241051, 0.00246583, 0.00254152, 0.00263219, 0.00273312, 0.00283429, 0.00292959, 0.00301605, 0.00310175, 0.00319891, 0.00331818, 0.00346179, 0.0036334, 0.00383225, 0.00404646, 0.00428694, 0.00458022, 0.00494227, 0.0053687, 0.00583487, 0.00633012, 0.00687187, 0.00746049, 0.00809201, 0.00878199, 0.0095114, 0.01024135, 0.0109555, 0.01167786, 0.0124453, 0.01330371, 0.0142784, 0.01539976, 0.0166654, 0.01809985, 0.01967022, 0.02129301, 0.02289335, 0.02450141, 0.02615985, 0.0280503, 0.03080646, 0.03387766, 0.03801803, 0.0419874, 0.04736536, 0.05300098, 0.05855658, 0.06482901, 0.07190915, 0.07970691, 0.08983143, 0.10098764, 0.11321554, 0.12654008, 0.14096752, 0.15648176, 0.17304118, 0.19057636, 0.20898907, 0.22815281, 0.24791488, 0.26810056, 0.2885187, 1.0], "hispanic|female": [0.00463919, 0.00030155, 0.00017404, 0.00014833, 0.00010648, 0.00010069, 9.295e-05, 8.858e-05, 8.542e-05, 8.342e-05, 8.467e-05, 9.31e-05, 0.00011326, 0.00014707, 0.00018979, 0.00023599, 0.00027965, 0.00031885, 0.00035198, 0.00038112, 0.00041272, 0.00044614, 0.00047374, 0.00049248, 0.00050486, 0.00051394, 0.0005262, 0.00054636, 0.00057792, 0.00061766, 0.00066074, 0.00070182, 0.00073984, 0.00077353, 0.00080553, 0.0008408, 0.00088169, 0.00092592, 0.00097274, 0.00102226, 0.00107346, 0.00113031, 0.00119887, 0.00128393, 0.00138503, 0.00149841, 0.00161934, 0.00174741, 0.00187945, 0.0020165, 0.00216595, 0.0023301, 0.00250457, 0.00269132, 0.00289592, 0.00311018, 0.00335023, 0.00364749, 0.00401735, 0.00444571, 0.00492712, 0.00542397, 0.00589547, 0.00631579, 0.00671146, 0.00712277, 0.00760914, 0.00820989, 0.00897253, 0.00989505, 0.01094957, 0.01211167, 0.01339181, 0.01477711, 0.01628653, 0.01796143, 0.01980955, 0.02217568, 0.0246634, 0.02783222, 0.03113486, 0.03536072, 0.03986305, 0.04489501, 0.05077045, 0.05620692, 0.06422866, 0.07324466, 0.08333457, 0.09457207, 0.10702091, 0.12073042, 0.13573067, 0.15202737, 0.16959736, 0.18838461, 0.20829768, 0.22920893, 0.250956, 0.2733455, 1.0], "aian|male": [0.01022598, 0.00157911, 0.00044265, 0.0004226, 0.00040478, 0.00019536, 0.00015729, 0.00014415, 0.00014733, 0.00016632, 0.00020816, 0.00028576, 0.00041358, 0.00059714, 0.00082082, 0.00107192, 0.0013278, 0.00157456, 0.00180573, 0.00203527, 0.0022899, 0.00257791, 0.00288539, 0.0032105, 0.00355639, 0.0038916, 0.00425437, 0.00470616, 0.00525252, 0.0058332, 0.00639923, 0.00690073, 0.00733144, 0.00769825, 0.00803243, 0.00841015, 0.00880924, 0.0091199, 0.00928123, 0.00933741, 0.00932701, 0.00938761, 0.00965246, 0.01022486, 0.01105441, 0.01203125, 0.01299159, 0.01384383, 0.01445943, 0.01488231, 0.01527958, 0.01574317, 0.01621592, 0.01672942, 0.01730009, 0.01783746, 0.01841542, 0.01921511, 0.02028639, 0.02151871, 0.02278232, 0.02395963, 0.02504176, 0.0260214, 0.02695781, 0.02793607, 0.02898447, 0.03006731, 0.03117605, 0.03231265, 0.03355416, 0.03488648, 0.0361882, 0.03739185, 0.03854728, 0.03965297, 0.04094272, 0.04276859, 0.04547299, 0.04908474, 0.05362524, 0.05827525, 0.06261967, 0.06622573, 0.0696125, 0.07322996, 0.07763898, 0.08311895, 0.08889116, 0.09495405, 0.10130253, 0.1079275, 0.11481542, 0.12194785, 0.12930119, 0.13684651, 0.14454956, 0.15237097, 0.16026677, 0.16818908, 1.0], "aian|female": [0.00789968, 0.00072654, 0.0006067, 0.00049669, 0.00031704, 0.0002968, 0.00026484, 0.00023648, 0.00020045, 0.0001592, 0.00012853, 0.00013542, 0.00021046, 0.00036758, 0.00057908, 0.00081442, 0.00103578, 0.00122744, 0.00137679, 0.00149976, 0.00163084, 0.00178233, 0.0019347, 0.00208575, 0.00223855, 0.00238143, 0.00253622, 0.00273449, 0.00298303, 0.00325478, 0.00353229, 0.00378388, 0.00399439, 0.00416193, 0.00431018, 0.00445572, 0.00463098, 0.00486273, 0.00516403, 0.00550845, 0.00588738, 0.00625808, 0.00657258, 0.00680839, 0.00699806, 0.00717748, 0.00740888, 0.00773189, 0.0081718, 0.00868797, 0.00922189, 0.00973613, 0.01023382, 0.01070813, 0.01116928, 0.01162513, 0.01208911, 0.0125649, 0.0130492, 0.01353046, 0.0140116, 0.01448632, 0.01495261, 0.0154257, 0.01593407, 0.01647069, 0.01707709, 0.01783836, 0.01881163, 0.01999134, 0.02136904, 0.02289337, 0.02451691, 0.0261826, 0.02793353, 0.02982726, 0.03204346, 0.0347696, 0.0382105, 0.04239199, 0.04718805, 0.05204148, 0.05661863, 0.0607889, 0.0649327, 0.06837108, 0.07460169, 0.08130564, 0.08849926, 0.09619523, 0.1044016, 0.11312081, 0.12234864, 0.13207318, 0.14227395, 0.15292105, 0.16397469, 0.17538489, 0.18709183, 0.19902626, 1.0], "asian|male": [0.00377087, 0.00032785, 0.00010281, 0.00014222, 0.00014523, 9.608e-05, 8.716e-05, 8.102e-05, 7.681e-05, 7.49e-05, 7.689e-05, 8.561e-05, 0.00010438, 0.00013493, 0.00017495, 0.00021762, 0.00026306, 0.0003166, 0.00037864, 0.00044481, 0.00051344, 0.00057607, 0.00062355, 0.00065134, 0.00066476, 0.00067468, 0.00068603, 0.00069482, 0.000702, 0.00070877, 0.00071617, 0.00072553, 0.00073819, 0.00075555, 0.00077863, 0.00080387, 0.000835, 0.00088118, 0.00094671, 0.00102855, 0.00112482, 0.00122656, 0.00132524, 0.00141478, 0.00150085, 0.00159271, 0.00170258, 0.00183385, 0.00198839, 0.00215915, 0.00234006, 0.00252664, 0.00272196, 0.00293418, 0.00317414, 0.00344968, 0.00376133, 0.00410475, 0.00446621, 0.00483995, 0.005228, 0.00565184, 0.0061288, 0.00667971, 0.00730525, 0.00797543, 0.00868554, 0.0094767, 0.01036825, 0.01136204, 0.01247869, 0.0136873, 0.0149414, 0.01621965, 0.01757318, 0.01903489, 0.02072939, 0.02316992, 0.02585096, 0.02945811, 0.03296576, 0.03790336, 0.04318388, 0.04848053, 0.05456015, 0.06153884, 0.06935507, 0.07968797, 0.09129046, 0.10423972, 0.11859533, 0.13439287, 0.15163763, 0.17029859, 0.1903038, 0.21153763, 0.23384078, 0.2570129, 0.28081903, 0.30499855, 1.0], "asian|female": [0.00307388, 0.00032453, 3.959e-05, 0.00013212, 9.082e-05, 8.333e-05, 8.406e-05, 8.435e-05, 8.32e-05, 8.082e-05, 7.871e-05, 7.968e-05, 8.719e-05, 0.00010305, 0.00012446, 0.00014847, 0.00017059, 0.00018777, 0.00019782, 0.00020281, 0.00020635, 0.00021126, 0.00021732, 0.0002253, 0.00023431, 0.00024496, 0.00025464, 0.00025999, 0.00025989, 0.00025739, 0.00025463, 0.00025618, 0.00026548, 0.00028487, 0.00031244, 0.00034332, 0.00037491, 0.0004095, 0.00044659, 0.00048589, 0.00053261, 0.00058273, 0.00062632, 0.00065951, 0.00068803, 0.00071295, 0.00075028, 0.00081895, 0.00092904, 0.00106778, 0.00122364, 0.00137387, 0.00150365, 0.00160469, 0.00169053, 0.00178887, 0.0019155, 0.00206121, 0.00222603, 0.00241126, 0.00260181, 0.00282353, 0.00312167, 0.00352172, 0.00400794, 0.0045483, 0.00510638, 0.0056775, 0.0062501, 0.00684187, 0.00747921, 0.0081946, 0.00902015, 0.01000852, 0.0111951, 0.0125985, 0.01418963, 0.01620855, 0.01829394, 0.02095448, 0.02380257, 0.02755325, 0.03160078, 0.03620511, 0.04167872, 0.04682837, 0.05456163, 0.0634257, 0.07353792, 0.08501242, 0.09795471, 0.11245503, 0.12858069, 0.14636786, 0.16581368, 0.18686888, 0.20943263, 0.2333502, 0.25841427, 0.28437033, 1.0], "black|male": [0.01149879, 0.00081921, 0.00055443, 0.00039466, 0.00034495, 0.00029378, 0.00028346, 0.00026735, 0.0002284, 0.00017114, 0.00012244, 0.00012852, 0.0002428, 0.00049218, 0.00083282, 0.00120407, 0.00154615, 0.00184471, 0.00207913, 0.00226488, 0.00245657, 0.00265239, 0.00279375, 0.00286389, 0.00288401, 0.00287749, 0.0028863, 0.00293915, 0.00305446, 0.00320859, 0.00336519, 0.00350446, 0.0036412, 0.00378245, 0.00394021, 0.0041216, 0.00432971, 0.00456306, 0.00480719, 0.00504933, 0.00530925, 0.00557966, 0.00582676, 0.00604775, 0.00626553, 0.00651086, 0.00680805, 0.00715574, 0.00754749, 0.00797091, 0.00841565, 0.00890061, 0.00945479, 0.01010814, 0.01086785, 0.01166687, 0.01252679, 0.01354795, 0.01474703, 0.01606414, 0.01740925, 0.01874928, 0.02013752, 0.02161328, 0.02320104, 0.02492795, 0.0267838, 0.02852569, 0.03024616, 0.03194522, 0.03396916, 0.03605762, 0.03802411, 0.04026102, 0.04211096, 0.04490472, 0.04668312, 0.05152307, 0.05398151, 0.06008441, 0.06477811, 0.07187186, 0.07772595, 0.082836, 0.09009202, 0.09988278, 0.1041541, 0.11428026, 0.12517184, 0.13684431, 0.14930512, 0.16255249, 0.17657408, 0.19134608, 0.20683233, 0.22298397, 0.23973931, 0.25702432, 0.27475354, 0.29283148, 1.0], "black|female": [0.01022358, 0.00071869, 0.00043665, 0.00037003, 0.00028974, 0.00025406, 0.00022237, 0.00019841, 0.00017916, 0.0001647, 0.00015834, 0.00016623, 0.0001955, 0.00024939, 0.00032108, 0.00040061, 0.00048018, 0.00055945, 0.00063651, 0.00071254, 0.00079635, 0.00088232, 0.00095506, 0.00100836, 0.001049, 0.00108396, 0.0011278, 0.00118962, 0.00127348, 0.00136923, 0.0014672, 0.00155845, 0.00164427, 0.0017283, 0.00181943, 0.00191911, 0.00203658, 0.00218396, 0.00236061, 0.00255189, 0.00275876, 0.00296482, 0.00314609, 0.00329631, 0.00343269, 0.00358602, 0.00377238, 0.00397977, 0.00420358, 0.00444304, 0.00469249, 0.00497438, 0.00531947, 0.00575073, 0.00626295, 0.00681236, 0.00739171, 0.00803788, 0.00874705, 0.00949761, 0.01026115, 0.01103756, 0.01185592, 0.01274261, 0.01370702, 0.0147446, 0.01586035, 0.01697982, 0.01816462, 0.01931021, 0.02060523, 0.02202865, 0.02365308, 0.02515619, 0.02697649, 0.02929868, 0.03101498, 0.03417609, 0.03709119, 0.04148489, 0.04560576, 0.05063054, 0.05547215, 0.06055576, 0.06726649, 0.07230046, 0.08110294, 0.08954614, 0.09872014, 0.10865705, 0.11938394, 0.13092135, 0.14328185, 0.15646848, 0.17047343, 0.18527672, 0.20084512, 0.21713167, 0.23407525, 0.25160098, 1.0], "white|male": [0.00487351, 0.00043029, 0.00033952, 0.00023733, 0.00015767, 0.00015872, 0.00014071, 0.00012737, 0.00011457, 0.00010315, 9.901e-05, 0.00011247, 0.00015527, 0.00023241, 0.0003328, 0.00044214, 0.0005486, 0.00065042, 0.00074466, 0.00083489, 0.00093176, 0.00103358, 0.00112885, 0.00121434, 0.00129473, 0.00137242, 0.00145842, 0.00156194, 0.00168615, 0.00182162, 0.00195851, 0.00208784, 0.0022084, 0.00231989, 0.00242768, 0.00253807, 0.00265431, 0.00277488, 0.00289895, 0.00302542, 0.0031676, 0.00331614, 0.00345103, 0.00356965, 0.00368985, 0.0038366, 0.00403221, 0.0042768, 0.00456351, 0.00487812, 0.00521169, 0.00557556, 0.00598766, 0.00647035, 0.00703047, 0.00762744, 0.00826791, 0.00899767, 0.0098046, 0.01064568, 0.01148874, 0.01232568, 0.01317561, 0.01406699, 0.01502521, 0.0160658, 0.01735258, 0.01853841, 0.01982599, 0.02122341, 0.02249423, 0.02420362, 0.02614199, 0.02848712, 0.03113207, 0.0340574, 0.03669287, 0.04145061, 0.04499244, 0.0503946, 0.05520643, 0.06231886, 0.06978311, 0.0771304, 0.08541023, 0.0947338, 0.1049718, 0.11821247, 0.13272861, 0.14854451, 0.16566029, 0.18404765, 0.20364635, 0.22436185, 0.24606472, 0.26859209, 0.2917513, 0.31532559, 0.33908194, 0.36278, 1.0], "white|female": [0.00403335, 0.00021314, 0.00014536, 0.00011791, 9.911e-05, 0.00010021, 9.519e-05, 9.046e-05, 8.458e-05, 7.824e-05, 7.442e-05, 7.775e-05, 9.328e-05, 0.00012336, 0.00016368, 0.00020847, 0.00025134, 0.00029073, 0.00032488, 0.0003561, 0.00039128, 0.00043007, 0.00046587, 0.00049723, 0.00052742, 0.00055622, 0.00059227, 0.00064539, 0.00071901, 0.00080485, 0.00089488, 0.00097972, 0.00105607, 0.00112237, 0.00118429, 0.00124729, 0.00131815, 0.00140025, 0.00149583, 0.00160112, 0.00172047, 0.00184272, 0.00195302, 0.00204769, 0.00214, 0.00224827, 0.00238994, 0.002566, 0.00277268, 0.00299797, 0.00324171, 0.00350078, 0.00377007, 0.00405709, 0.00437533, 0.00470828, 0.0050808, 0.00553607, 0.00607603, 0.00666144, 0.00726268, 0.00785417, 0.00843417, 0.00901265, 0.00961926, 0.01028319, 0.01109659, 0.01190692, 0.01281878, 0.01387165, 0.01490124, 0.01625918, 0.01776356, 0.01969389, 0.02187203, 0.0243884, 0.02668919, 0.03046543, 0.03344681, 0.03759403, 0.04166038, 0.04691614, 0.05256831, 0.05883833, 0.06610193, 0.07277216, 0.08253269, 0.09339646, 0.10543212, 0.11869764, 0.13323599, 0.14907062, 0.16620079, 0.18459739, 0.20419946, 0.22491188, 0.24660496, 0.26911569, 0.29225165, 0.31579664, 1.0]}, "ex100": {"total|male": 2.0126, "total|female": 2.2609, "hispanic|male": 2.4215, "hispanic|female": 2.4829, "aian|male": 4.4594, "aian|female": 3.6128, "asian|male": 2.239, "asian|female": 2.3333, "black|male": 2.4193, "black|female": 2.7633, "white|male": 1.9133, "white|female": 2.1749}, "e0": {"total|male": 75.82, "total|female": 81.08, "hispanic|male": 78.45, "hispanic|female": 83.97, "aian|male": 66.72, "aian|female": 73.53, "asian|male": 83.17, "asian|female": 87.05, "black|male": 70.3, "black|female": 77.63, "white|male": 76.02, "white|female": 80.95}};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" integrity="sha384-pPi0zxBAoDu6+JXW/C68UZLvBUUtU+7zonhif43rqj7pxsGyqyqzcian2Rj37Rss" crossorigin="anonymous"></script>
+<script>
+(function () {
+  "use strict";
+
+  const SMOKE_KNOTS = [[25, 1.04], [35, 1.62], [45, 2.30], [55, 2.75], [65, 2.90], [75, 2.55], [85, 2.00], [95, 1.42]];
+  const P_NEVER = 0.67;
+  const P_FORMER = 0.22;
+  const P_CURRENT = 0.11;
+  const P_DIABETES = 0.12;
+  const P_ACT_NONE = 0.262;
+  const P_ACT_SOME = 0.266;
+  const P_ACT_MEETS = 0.472;
+  const HR_ACT = { none: 1, some: 0.80, meets: 0.69 };
+  const ACT_EXPECTED = P_ACT_NONE * HR_ACT.none + P_ACT_SOME * HR_ACT.some + P_ACT_MEETS * HR_ACT.meets;
+  const P_COPD = 0.038;
+  const COPD_BASE = 1.45;
+  const COPD_DENOM = 1 + P_COPD * (COPD_BASE - 1);
+  const P_STAGE3 = 0.051;
+  const P_STAGE5 = 0.002;
+  const HR_STAGE3 = 1.6;
+  const HR_FAILURE = 5.9;
+  const KIDNEY_EXPECTED = 1 + P_STAGE3 * (HR_STAGE3 - 1) + P_STAGE5 * (HR_FAILURE - 1);
+
+  const BMI_Q = {
+    male: [[0.01, 18.5], [0.05, 20.9], [0.10, 22.3], [0.15, 23.4], [0.25, 24.9], [0.50, 28.2], [0.75, 32.6], [0.85, 35.1], [0.90, 37.8], [0.95, 42.1], [0.99, 50]],
+    female: [[0.01, 17.5], [0.05, 19.7], [0.10, 21.5], [0.15, 22.4], [0.25, 24.1], [0.50, 28.3], [0.75, 34.4], [0.85, 38.4], [0.90, 40.9], [0.95, 44.9], [0.99, 52]]
+  };
+
+  const GROUP_NAME = {
+    total: "U.S. total",
+    hispanic: "Hispanic, any race",
+    aian: "AIAN, non-Hispanic",
+    asian: "Asian, non-Hispanic",
+    black: "Black, non-Hispanic",
+    white: "White, non-Hispanic"
+  };
+
+  const bmiCache = new Map();
+
+  function $(id) { return document.getElementById(id); }
+
+  function interpLog(knots, age) {
+    if (age <= knots[0][0]) return knots[0][1];
+    if (age >= knots[knots.length - 1][0]) return knots[knots.length - 1][1];
+    for (let i = 0; i < knots.length - 1; i++) {
+      const a0 = knots[i][0], h0 = knots[i][1];
+      const a1 = knots[i + 1][0], h1 = knots[i + 1][1];
+      if (age >= a0 && age <= a1) {
+        const t = (age - a0) / (a1 - a0);
+        return Math.exp(Math.log(h0) * (1 - t) + Math.log(h1) * t);
+      }
+    }
+    return knots[knots.length - 1][1];
+  }
+
+  function hrCurrent(age) { return interpLog(SMOKE_KNOTS, age); }
+
+  function smokeMultiplier(kind, age) {
+    const hc = hrCurrent(age);
+    const formerPop = 1 + 0.30 * (hc - 1);
+    const expected = P_NEVER * 1 + P_FORMER * formerPop + P_CURRENT * hc;
+    if (kind === "current") return hc / expected;
+    if (kind === "never") return 1 / expected;
+    if (kind === "former10") return (1 + 0.15 * (hc - 1)) / expected;
+    if (kind === "recent") return (1 + 0.55 * (hc - 1)) / expected;
+    return 1;
+  }
+
+  function bmiAt(qs, p) {
+    if (p <= qs[0][0]) return qs[0][1];
+    if (p >= qs[qs.length - 1][0]) return qs[qs.length - 1][1];
+    for (let i = 0; i < qs.length - 1; i++) {
+      const p0 = qs[i][0], b0 = qs[i][1];
+      const p1 = qs[i + 1][0], b1 = qs[i + 1][1];
+      if (p >= p0 && p <= p1) {
+        const t = (p - p0) / (p1 - p0);
+        return b0 * (1 - t) + b1 * t;
+      }
+    }
+    return qs[qs.length - 1][1];
+  }
+
+  function bmiAgeScale(age) {
+    if (age <= 40) return 1.20;
+    if (age >= 85) return 0.55;
+    return 1.20 + (0.55 - 1.20) * ((age - 40) / 45);
+  }
+
+  function bmiHazard(bmi, sex, age) {
+    const b = Math.min(Math.max(bmi, 15), 55);
+    let hr;
+    if (b < 18.5) hr = 1.51;
+    else if (b < 20) hr = 1.13;
+    else if (b < 25) hr = 1;
+    else hr = Math.pow(1.29, (b - 25) / 5);
+    if (b >= 25) hr = Math.exp(Math.log(hr) * (sex === "male" ? 1.22 : 0.80));
+    hr = Math.min(hr, 4.5);
+    return Math.exp(Math.log(hr) * bmiAgeScale(age));
+  }
+
+  function expectedBmiHazard(sex, age) {
+    const key = sex + "|" + age;
+    if (bmiCache.has(key)) return bmiCache.get(key);
+    const qs = BMI_Q[sex];
+    const n = 400;
+    let sum = 0;
+    for (let i = 0; i < n; i++) sum += bmiHazard(bmiAt(qs, (i + 0.5) / n), sex, age);
+    const mean = sum / n;
+    bmiCache.set(key, mean);
+    return mean;
+  }
+
+  function diabetesMultiplier(age) {
+    let hr = 1.8;
+    if (age > 70) {
+      const scale = Math.max(0.45, 1 - (age - 70) / 40);
+      hr = Math.exp(Math.log(1.8) * scale);
+    }
+    return hr / (1 + P_DIABETES * (hr - 1));
+  }
+
+  function activityMultiplier(kind) {
+    const hr = HR_ACT[kind];
+    if (!hr) return 1;
+    return hr / ACT_EXPECTED;
+  }
+
+  function copdPersonHr(profile) {
+    if (profile.copd === "oxygen") {
+      let hr = 2.18;
+      if (profile.smoke === "current" || profile.smoke === "recent") hr = Math.exp(Math.log(hr) * 0.85);
+      return hr;
+    }
+    if (profile.smoke === "never") return 1.41;
+    if (profile.smoke === "former10" || profile.smoke === "recent") return 1.37;
+    if (profile.smoke === "current") return 1.48;
+    return COPD_BASE;
+  }
+
+  function copdMultiplier(profile) {
+    if (!profile.copd) return 1;
+    if (profile.copd === "no") return 1 / COPD_DENOM;
+    if (profile.copd === "yes" || profile.copd === "oxygen") return copdPersonHr(profile) / COPD_DENOM;
+    return 1;
+  }
+
+  function kidneyMultiplier(kind) {
+    if (!kind) return 1;
+    if (kind === "no") return 1 / KIDNEY_EXPECTED;
+    if (kind === "stage3") return HR_STAGE3 / KIDNEY_EXPECTED;
+    if (kind === "failure") return HR_FAILURE / KIDNEY_EXPECTED;
+    return 1;
+  }
+
+  function conditionMultiplier(profile, age) {
+    const parts = [];
+    if (age >= 30) {
+      if (profile.diabetes) parts.push(diabetesMultiplier(age));
+      let mi = 2.0;
+      let stroke = 2.1;
+      if (profile.smoke === "current" || profile.smoke === "recent") {
+        mi = Math.exp(Math.log(mi) * 0.85);
+        stroke = Math.exp(Math.log(stroke) * 0.85);
+      }
+      if (profile.mi) parts.push(mi);
+      if (profile.stroke) parts.push(stroke);
+    }
+    if (age >= 40) {
+      const copd = copdMultiplier(profile);
+      if (profile.copd && copd !== 1) parts.push(copd);
+      const kidney = kidneyMultiplier(profile.kidney);
+      if (profile.kidney && kidney !== 1) parts.push(kidney);
+    }
+    if (!parts.length) return 1;
+    let logSum = 0;
+    for (const h of parts) logSum += Math.log(h);
+    if (parts.length >= 2) logSum *= 1 - 0.04 * (parts.length - 1);
+    return Math.exp(logSum);
+  }
+
+  // Chetty and colleagues, JAMA 2016, online table 16. Individual earnings,
+  // percentile within sex, age, and year. Pooled deaths and counts, 2001–2014.
+  // Each row is [age, bottom quarter, second, third, top]. Hazard is that
+  // quarter’s death rate divided by the rate for every percentile of that sex and age.
+  const INCOME_HR = {
+    male: [[40, 1.920, 0.998, 0.661, 0.423], [45, 1.887, 1.019, 0.667, 0.430], [50, 1.858, 1.019, 0.674, 0.454], [55, 1.803, 1.036, 0.697, 0.470], [60, 1.723, 1.040, 0.740, 0.503], [65, 1.578, 1.068, 0.811, 0.563], [70, 1.454, 1.087, 0.892, 0.616], [76, 1.304, 1.117, 0.954, 0.698]],
+    female: [[40, 1.668, 1.084, 0.736, 0.513], [45, 1.724, 1.012, 0.735, 0.530], [50, 1.750, 0.996, 0.717, 0.538], [55, 1.698, 1.010, 0.734, 0.560], [60, 1.620, 1.041, 0.767, 0.575], [65, 1.482, 1.074, 0.823, 0.631], [70, 1.354, 1.097, 0.889, 0.680], [76, 1.268, 1.107, 0.939, 0.722]]
+  };
+  // Mean individual earnings in that quarter, 2012 dollars, same table.
+  const INCOME_DOLLARS = {
+    male: [[40, 10588, 33267, 55514, 150099], [50, 11035, 35903, 61431, 190562], [60, 9809, 32666, 58591, 200332], [70, 9574, 29442, 52778, 194511], [76, 10215, 30095, 53376, 197260]],
+    female: [[40, 4598, 19343, 37013, 99210], [50, 6443, 23265, 42008, 119181], [60, 6687, 23414, 42067, 122069], [70, 6635, 21027, 37512, 122535], [76, 6742, 20571, 36546, 115436]]
+  };
+  const CPI_2012 = 229.594;
+  const CPI_2024 = 313.689;
+  const INCOME_INDEX = { q1: 1, q2: 2, q3: 3, q4: 4 };
+  const INCOME_LABEL = {
+    q1: "Bottom quarter, own earnings",
+    q2: "Second quarter, own earnings",
+    q3: "Third quarter, own earnings",
+    q4: "Top quarter, own earnings"
+  };
+
+  function knotValue(rows, age, index) {
+    if (age <= rows[0][0]) return rows[0][index];
+    const last = rows[rows.length - 1];
+    if (age >= last[0]) return last[index];
+    for (let i = 0; i < rows.length - 1; i++) {
+      const a0 = rows[i][0];
+      const a1 = rows[i + 1][0];
+      if (age <= a1) {
+        const t = (age - a0) / (a1 - a0);
+        return rows[i][index] + t * (rows[i + 1][index] - rows[i][index]);
+      }
+    }
+    return last[index];
+  }
+
+  function incomeHazard(sex, band, age) {
+    const index = INCOME_INDEX[band];
+    if (!index || age < 40) return 1;
+    const rows = INCOME_HR[sex === "male" ? "male" : "female"];
+    return knotValue(rows, age, index);
+  }
+
+  function moneyAbout(n) {
+    const r = Math.round(n / 1000) * 1000;
+    return "$" + r.toLocaleString("en-US");
+  }
+
+  function multiplier(profile, age) {
+    let hr = 1;
+    if (profile.smoke && age >= 25) hr *= smokeMultiplier(profile.smoke, age);
+    if (profile.activity && age >= 18) hr *= activityMultiplier(profile.activity);
+    if (profile.bmi != null && age >= 35) {
+      hr *= bmiHazard(profile.bmi, profile.sex, age) / expectedBmiHazard(profile.sex, age);
+    }
+    hr *= conditionMultiplier(profile, age);
+    if (profile.income && profile.sex && age >= 40) hr *= incomeHazard(profile.sex, profile.income, age);
+    if (hr > 6) hr = 6;
+    if (hr < 0.35) hr = 0.35;
+    return hr;
+  }
+
+  function qOf(qx, ex100, x, hr) {
+    let q = x < 100 ? qx[x] : Math.min(0.95, 1 / (ex100 + 0.5));
+    if (hr !== 1) q = Math.min(0.95, 1 - Math.pow(1 - q, hr));
+    return q;
+  }
+
+  function analyze(qx, ex100, age, hrFn) {
+    const deaths = [];
+    let lx = 1;
+    let T = 0;
+    for (let x = age; x < 130; x++) {
+      let q = qOf(qx, ex100, x, hrFn(x));
+      if (x === 129) q = 1;
+      const dx = lx * q;
+      T += lx - dx / 2;
+      deaths.push({ x: x, dx: dx });
+      lx -= dx;
+      if (lx < 1e-15) break;
+    }
+    function quantile(p) {
+      let c = 0;
+      for (const d of deaths) {
+        if (c + d.dx >= p - 1e-15) {
+          const frac = d.dx === 0 ? 0 : (p - c) / d.dx;
+          return d.x + Math.min(1, Math.max(0, frac));
+        }
+        c += d.dx;
+      }
+      return deaths.length ? deaths[deaths.length - 1].x + 1 : age;
+    }
+    return {
+      e: T,
+      meanAge: age + T,
+      medianAge: quantile(0.5),
+      low95: quantile(0.025),
+      high95: quantile(0.975),
+      low99: quantile(0.005),
+      high99: quantile(0.995),
+      deaths: deaths
+    };
+  }
+
+  function spanOf(meanAge, medianAge) {
+    return [Math.min(meanAge, medianAge), Math.max(meanAge, medianAge)];
+  }
+
+  function fmtSpan(span) {
+    const a = String(Math.round(span[0]));
+    const b = String(Math.round(span[1]));
+    return a === b ? a : a + "–" + b;
+  }
+
+  function fillAge(node, spanText) {
+    node.replaceChildren();
+    const word = document.createElement("span");
+    word.className = "around-word";
+    word.textContent = "Around ";
+    node.appendChild(word);
+    node.appendChild(document.createTextNode(spanText));
+  }
+
+  function bmiCategory(bmi) {
+    if (bmi < 18.5) return "underweight";
+    if (bmi < 25) return "healthy weight";
+    if (bmi < 30) return "overweight";
+    if (bmi < 35) return "class 1 obesity";
+    if (bmi < 40) return "class 2 obesity";
+    return "class 3 obesity";
+  }
+
+  function numOrBlank(id) {
+    return $(id).value.trim();
+  }
+
+  function allowed(value, list) {
+    return list.indexOf(value) >= 0 ? value : "";
+  }
+
+  function readProfile() {
+    const errors = [];
+    const ageRaw = $("age").value.trim();
+    let age = null;
+    if (ageRaw !== "") {
+      const n = Number(ageRaw);
+      if (!Number.isInteger(n) || n < 0 || n > 100) {
+        errors.push("Enter a current age from 0 through 100, in whole years.");
+      } else {
+        age = n;
+      }
+    }
+    const sexVal = $("sex").value;
+    const sex = sexVal === "male" || sexVal === "female" ? sexVal : "";
+    const groupRaw = $("group").value;
+    const groupKnown = groupRaw === "total" || groupRaw === "hispanic" || groupRaw === "aian" || groupRaw === "asian" || groupRaw === "black" || groupRaw === "white" || groupRaw === "other";
+    const groupSel = groupKnown ? groupRaw : "";
+    const group = groupSel === "other" ? "total" : groupSel;
+    const smoke = $("smoke").value;
+    const activity = allowed($("activity").value, ["none", "some", "meets"]);
+    const copd = allowed($("copd").value, ["no", "yes", "oxygen"]);
+    const kidney = allowed($("kidney").value, ["no", "stage3", "failure"]);
+    const income = allowed($("income").value, ["q1", "q2", "q3", "q4"]);
+    const unit = document.body.dataset.unit || "us";
+    let bmi = null;
+    const feet = numOrBlank("feet");
+    const inches = numOrBlank("inches");
+    const cm = numOrBlank("cm");
+    const weight = numOrBlank("weight");
+    const anyBody = unit === "us" ? (feet !== "" || inches !== "" || weight !== "") : (cm !== "" || weight !== "");
+    if (anyBody) {
+      if (unit === "us") {
+        if (feet === "" || inches === "" || weight === "") {
+          errors.push("Enter feet, inches, and pounds together, or clear all three to keep the U.S. average body size.");
+        } else {
+          const ft = Number(feet), inch = Number(inches), lb = Number(weight);
+          if (!Number.isFinite(ft) || !Number.isFinite(inch) || !Number.isFinite(lb) || ft < 1 || ft > 8 || inch < 0 || inch >= 12 || lb < 20 || lb > 700) {
+            errors.push("Check the height and weight. Use feet 1–8, inches 0–11, and weight 20–700 pounds.");
+          } else {
+            const totalIn = ft * 12 + inch;
+            bmi = (703 * lb) / (totalIn * totalIn);
+            bmi = Math.round(bmi * 10) / 10;
+          }
+        }
+      } else if (cm === "" || weight === "") {
+        errors.push("Enter centimeters and kilograms together, or clear both to keep the U.S. average body size.");
+      } else {
+        const cmN = Number(cm), kg = Number(weight);
+        if (!Number.isFinite(cmN) || !Number.isFinite(kg) || cmN < 50 || cmN > 250 || kg < 10 || kg > 320) {
+          errors.push("Check the height and weight. Use 50–250 cm and 10–320 kg.");
+        } else {
+          const meters = cmN / 100;
+          bmi = kg / (meters * meters);
+          bmi = Math.round(bmi * 10) / 10;
+        }
+      }
+      if (bmi != null && (bmi < 12 || bmi > 70)) {
+        errors.push("That height and weight are outside the range this model can use. Check both entries.");
+        bmi = null;
+      }
+    }
+    return {
+      errors: errors,
+      age: age,
+      sex: sex,
+      group: group,
+      groupSel: groupSel,
+      ready: errors.length === 0 && age !== null && sex !== "" && groupSel !== "",
+      smoke: smoke,
+      activity: activity,
+      copd: copd,
+      kidney: kidney,
+      income: income,
+      diabetes: $("diabetes").checked,
+      mi: $("mi").checked,
+      stroke: $("stroke").checked,
+      other: $("other").checked,
+      bmi: bmi,
+      unit: unit
+    };
+  }
+
+  function tableFor(profile) {
+    const key = profile.group + "|" + profile.sex;
+    return { qx: LIFE.qx[key], ex100: LIFE.ex100[key] };
+  }
+
+  const SMOKE_LABEL = {
+    never: "Never smoked",
+    former10: "Quit 10+ years ago",
+    recent: "Quit within 10 years",
+    current: "Current smoking"
+  };
+  const ACTIVITY_LABEL = {
+    none: "No leisure-time activity",
+    some: "Some activity",
+    meets: "Meets the activity guideline"
+  };
+  const COPD_LABEL = {
+    no: "No COPD",
+    yes: "COPD",
+    oxygen: "COPD on oxygen"
+  };
+  const KIDNEY_LABEL = {
+    no: "No kidney disease",
+    stage3: "Kidney disease, stage 3",
+    failure: "Kidney failure or dialysis"
+  };
+
+  function yearsSigned(delta) {
+    const n = Math.round(delta);
+    if (n > 0) return "+" + n + (n === 1 ? " year" : " years");
+    if (n < 0) return "−" + Math.abs(n) + (Math.abs(n) === 1 ? " year" : " years");
+    return "under 1 year";
+  }
+
+  function soloProfile(profile, key) {
+    return {
+      age: profile.age,
+      sex: profile.sex,
+      group: profile.group,
+      smoke: key === "smoke" ? profile.smoke : "",
+      activity: key === "activity" ? profile.activity : "",
+      bmi: key === "bmi" ? profile.bmi : null,
+      diabetes: key === "diabetes" && profile.diabetes,
+      mi: key === "mi" && profile.mi,
+      stroke: key === "stroke" && profile.stroke,
+      copd: key === "copd" ? profile.copd : "",
+      kidney: key === "kidney" ? profile.kidney : "",
+      income: key === "income" ? profile.income : "",
+      other: false
+    };
+  }
+
+  function addFactor(box, label, value, kind, total) {
+    const row = document.createElement("tr");
+    row.className = kind + (total ? " total" : "");
+    const name = document.createElement("td");
+    if (total) {
+      const b = document.createElement("b");
+      b.textContent = "Total";
+      name.appendChild(b);
+    } else if (Array.isArray(label)) {
+      fillRich(name, label);
+    } else {
+      name.textContent = label;
+    }
+    const val = document.createElement("td");
+    const num = document.createElement("b");
+    num.textContent = value;
+    val.appendChild(num);
+    row.append(name, val);
+    box.appendChild(row);
+  }
+
+  function renderFactors(profile, table, base, adj) {
+    const box = $("factors");
+    const note = $("factors-note");
+    box.replaceChildren();
+    const specs = [];
+    if (profile.smoke) specs.push(["smoke", SMOKE_LABEL[profile.smoke] || "Smoking"]);
+    if (profile.activity) specs.push(["activity", ACTIVITY_LABEL[profile.activity] || "Activity"]);
+    if (profile.bmi != null) specs.push(["bmi", ["BMI ", { b: profile.bmi.toFixed(1) }]]);
+    if (profile.diabetes) specs.push(["diabetes", "Diabetes"]);
+    if (profile.mi) specs.push(["mi", "Heart attack"]);
+    if (profile.stroke) specs.push(["stroke", "Stroke"]);
+    if (profile.copd) specs.push(["copd", COPD_LABEL[profile.copd] || "COPD"]);
+    if (profile.kidney) specs.push(["kidney", KIDNEY_LABEL[profile.kidney] || "Kidney disease"]);
+    if (profile.income) specs.push(["income", INCOME_LABEL[profile.income] || "Personal income"]);
+    if (profile.other) specs.push(["other", "Another serious illness"]);
+    const about = String(Math.round(base.medianAge));
+    const incomeNote = profile.income ? " Personal income already includes differences in smoking, body size, and origin. A higher paycheck was not the test." : "";
+    if (!specs.length) {
+      const pieces = ["No factors entered. The median is your peers’ CDC table, about ", { b: about }, "."];
+      fillRich(note, pieces);
+      return;
+    }
+    let counted = 0;
+    for (let i = 0; i < specs.length; i++) {
+      const key = specs[i][0];
+      const label = specs[i][1];
+      if (key === "other") {
+        addFactor(box, label, "not counted", "flat");
+        continue;
+      }
+      counted += 1;
+      const solo = soloProfile(profile, key);
+      const stats = analyze(table.qx, table.ex100, profile.age, function (x) { return multiplier(solo, x); });
+      const delta = stats.medianAge - base.medianAge;
+      const n = Math.round(delta);
+      addFactor(box, label, yearsSigned(delta), n > 0 ? "plus" : n < 0 ? "minus" : "flat");
+    }
+    if (counted >= 2) {
+      const together = adj.medianAge - base.medianAge;
+      const n = Math.round(together);
+      addFactor(box, "Total", yearsSigned(together), n > 0 ? "plus" : n < 0 ? "minus" : "flat", true);
+    }
+    if (counted >= 2) {
+      fillRich(note, ["Each row is that factor alone, in years added to or removed from your peers’ median (about ", { b: about }, "). Total is every factor at once. Separate rows do not add when risks overlap.", incomeNote]);
+    } else if (counted === 1) {
+      fillRich(note, ["This row is that factor alone, in years added to or removed from your peers’ median (about ", { b: about }, ").", incomeNote]);
+    } else {
+      const pieces = ["Another serious illness is not counted. The median is your peers’ CDC table, about ", { b: about }, "."];
+      fillRich(note, pieces);
+    }
+  }
+
+  function renderIncomeHint(profile) {
+    const node = $("income-line");
+    if (!node) return;
+    const pieces = [];
+    if (!profile.income) {
+      pieces.push("Own earnings, not a household. Blank leaves income out.");
+    } else if (!profile.sex || profile.age == null) {
+      pieces.push("Set age and sex to see what that quarter earned among people like you.");
+    } else {
+      const refAge = profile.age < 40 ? 40 : profile.age > 76 ? 76 : profile.age;
+      const index = INCOME_INDEX[profile.income];
+      const dollars = knotValue(INCOME_DOLLARS[profile.sex], refAge, index);
+      const now = dollars * (CPI_2024 / CPI_2012);
+      const who = profile.sex === "male" ? "men" : "women";
+      const quarter = { q1: "bottom quarter", q2: "second quarter", q3: "third quarter", q4: "top quarter" }[profile.income];
+      pieces.push("Among " + who + " age " + refAge + ", the " + quarter + " averaged about ");
+      pieces.push({ b: moneyAbout(now) });
+      pieces.push(" of their own earnings in 2024 dollars (about ");
+      pieces.push({ b: moneyAbout(dollars) });
+      pieces.push(" in 2012 dollars).");
+      if (profile.age < 40) pieces.push(" Death rates use income from age 40.");
+    }
+    fillRich(node, pieces);
+  }
+
+  function render() {
+    paintFields();
+    const profile = readProfile();
+    const err = $("error");
+    if (profile.errors.length) {
+      err.textContent = profile.errors[0];
+      err.classList.remove("hidden");
+    } else {
+      err.textContent = "";
+      err.classList.add("hidden");
+    }
+    $("results").classList.remove("hidden");
+    $("dock").classList.remove("hidden");
+
+    if (profile.bmi == null) $("bmi-readout").textContent = "";
+    else $("bmi-readout").textContent = "BMI " + profile.bmi.toFixed(1) + " · " + bmiCategory(profile.bmi);
+    renderIncomeHint(profile);
+
+    const global = globalView(profile.age);
+    const usSpan = fmtSpan(global.span);
+    fillAge($("us-median"), usSpan);
+    fillRich($("dock-us"), ["U.S. all people around ", { b: usSpan }]);
+    renderAnalysis(profile);
+    renderStory(profile);
+
+    if (!profile.ready) {
+      $("profile-line").textContent = "U.S. total";
+      $("result-group").textContent = "—";
+      $("result-about").textContent = "Enter age, sex, and origin.";
+      $("remain-line").textContent = "";
+      $("dock-group").textContent = "—";
+      $("peer-median").textContent = "—";
+      $("dock-peer").textContent = "";
+      $("peer-tip").classList.add("hidden");
+      $("factors").replaceChildren();
+      $("factors-note").textContent = "Enter age, sex, and origin.";
+      $("warn-age").textContent = "";
+      $("warn-age").classList.add("hidden");
+      $("warn-other").classList.add("hidden");
+      $("warn-stack").classList.add("hidden");
+      drawChart({ age: profile.age, global: global.span, peers: null, you: null });
+      return;
+    }
+
+    const table = tableFor(profile);
+    const base = analyze(table.qx, table.ex100, profile.age, function () { return 1; });
+    const adj = analyze(table.qx, table.ex100, profile.age, function (x) { return multiplier(profile, x); });
+    const youSpan = spanOf(adj.meanAge, adj.medianAge);
+    const peerSpan = spanOf(base.meanAge, base.medianAge);
+    const peerSpanText = fmtSpan(peerSpan);
+    fillAge($("peer-median"), peerSpanText);
+    fillRich($("dock-peer"), ["Peers around ", { b: peerSpanText }]);
+    $("peer-tip").classList.remove("hidden");
+    const sexName = profile.sex === "male" ? "male" : "female";
+    const ageWord = profile.age === 0 ? "newborn" : profile.age + "-year-old";
+    let profileLine = ageWord + " " + sexName + " · " + GROUP_NAME[profile.group];
+    if (profile.groupSel === "other") profileLine += " · no separate table";
+    $("profile-line").textContent = profileLine;
+    fillAge($("result-group"), fmtSpan(youSpan));
+    fillRich($("result-about"), ["Median around ", { b: String(Math.round(adj.medianAge)) }, " · average around ", { b: String(Math.round(adj.meanAge)) }]);
+    fillRich($("remain-line"), ["Around ", { b: String(Math.round(adj.e)) }, " years left"]);
+    fillAge($("dock-group"), fmtSpan(youSpan));
+    renderFactors(profile, table, base, adj);
+
+    const ageNotes = [];
+    if (profile.bmi != null && profile.age < 35) ageNotes.push("Body size changes the death rates from age 35 onward. Years before that stay on the CDC table.");
+    if (profile.smoke && profile.age < 25) ageNotes.push("Smoking changes the death rates from age 25 onward.");
+    if (profile.activity && profile.age < 18) ageNotes.push("Leisure-time activity changes the death rates from age 18 onward.");
+    if ((profile.diabetes || profile.mi || profile.stroke) && profile.age < 30) ageNotes.push("Diabetes, heart attack, and stroke change the death rates from age 30 onward.");
+    if (profile.copd && profile.age < 40) ageNotes.push("COPD changes the death rates from age 40 onward.");
+    if (profile.kidney && profile.age < 40) ageNotes.push("Kidney disease changes the death rates from age 40 onward.");
+    if (profile.income && profile.age < 40) ageNotes.push("Personal income changes the death rates from age 40 onward.");
+    $("warn-age").textContent = ageNotes.join(" ");
+    $("warn-age").classList.toggle("hidden", ageNotes.length === 0);
+    $("warn-other").classList.toggle("hidden", !profile.other);
+    const stackCount = (profile.smoke === "current" || profile.smoke === "recent" ? 1 : 0) + (profile.activity === "none" ? 1 : 0) + (profile.diabetes ? 1 : 0) + (profile.mi ? 1 : 0) + (profile.stroke ? 1 : 0) + (profile.bmi != null && profile.bmi >= 35 ? 1 : 0) + (profile.copd === "yes" || profile.copd === "oxygen" ? 1 : 0) + (profile.kidney === "stage3" || profile.kidney === "failure" ? 1 : 0);
+    $("warn-stack").classList.toggle("hidden", stackCount < 3);
+
+    drawChart({ deaths: adj.deaths, age: profile.age, global: global.span, peers: peerSpan, you: youSpan });
+  }
+
+  function usReference(sex, age) {
+    const key = "total|" + sex;
+    return analyze(LIFE.qx[key], LIFE.ex100[key], age, function () { return 1; });
+  }
+
+  function globalView(age) {
+    const start = age == null ? 0 : age;
+    const male = usReference("male", start);
+    const female = usReference("female", start);
+    return {
+      span: [Math.min(male.medianAge, female.medianAge), Math.max(male.medianAge, female.medianAge)]
+    };
+  }
+
+  function medianBmi(sex) {
+    const qs = BMI_Q[sex];
+    for (let i = 0; i < qs.length; i++) if (qs[i][0] === 0.5) return qs[i][1];
+    return sex === "male" ? 28.2 : 28.3;
+  }
+
+  function fmtPct(n) {
+    const s = Number(n).toFixed(1);
+    return (s.endsWith(".0") ? s.slice(0, -2) : s) + "%";
+  }
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function fillRich(node, pieces) {
+    node.replaceChildren();
+    for (let i = 0; i < pieces.length; i++) {
+      const piece = pieces[i];
+      if (piece && typeof piece === "object" && piece.b != null) {
+        const b = document.createElement("b");
+        b.textContent = String(piece.b);
+        node.appendChild(b);
+      } else {
+        node.appendChild(document.createTextNode(String(piece)));
+      }
+    }
+  }
+
+  function addLine(parent, pieces) {
+    const p = document.createElement("p");
+    fillRich(p, pieces);
+    parent.appendChild(p);
+    return p;
+  }
+
+  function addRate(card, kind, label, pct) {
+    const row = el("div", "rate " + kind);
+    row.appendChild(el("span", "", label));
+    const track = el("div", "bar");
+    const fill = document.createElement("i");
+    fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    track.appendChild(fill);
+    row.appendChild(track);
+    const num = document.createElement("b");
+    num.textContent = fmtPct(pct);
+    row.appendChild(num);
+    card.appendChild(row);
+  }
+
+  function sexWord(sex) {
+    return sex === "male" ? "men" : "women";
+  }
+
+  function otherNote(sel) {
+    return sel === "other" ? "No separate table for this group, so this peer figure is the U.S. rate." : "";
+  }
+
+  function obesityPeer(profile) {
+    const sel = profile.groupSel;
+    const sex = profile.sex;
+    if (sel === "aian") return { missing: "No separate obesity figure for this group." };
+    if (sel === "total" || sel === "other") {
+      return {
+        pct: sex === "male" ? 39.2 : 41.3,
+        label: "U.S. " + sexWord(sex),
+        note: otherNote(sel)
+      };
+    }
+    const table = {
+      hispanic: { male: 43.6, female: 44.6 },
+      asian: { male: 17.8, female: 9.8 },
+      black: { male: 47.3, female: 56.0 },
+      white: { male: 38.3, female: 40.4 }
+    };
+    const names = { hispanic: "Hispanic", asian: "Asian", black: "Black", white: "White" };
+    let note = "";
+    if (sel === "asian" && sex === "female") note = "NCHS says the women’s figure does not meet its reliability standard.";
+    if (sel === "black" && sex === "male") note = "NCHS flags the men’s figure. This survey did not oversample by race.";
+    return { pct: table[sel][sex], label: names[sel] + " " + sexWord(sex), note: note };
+  }
+
+  function diabetesPeer(profile) {
+    const sel = profile.groupSel;
+    const sex = profile.sex;
+    if (sel === "aian") {
+      return {
+        pct: sex === "male" ? 11.5 : 18.9,
+        label: "AIAN " + sexWord(sex),
+        note: "Diagnosed only, so it is not the same measure as the U.S. 12%."
+      };
+    }
+    if (sel === "total" || sel === "other") {
+      return { pct: sex === "male" ? 14.9 : 12.4, label: "U.S. " + sexWord(sex), note: otherNote(sel) };
+    }
+    const both = { white: ["White adults", 11.2], black: ["Black adults", 20.7], asian: ["Asian adults", 14.5], hispanic: ["Hispanic adults", 17.1] };
+    return { pct: both[sel][1], label: both[sel][0], note: "" };
+  }
+
+  function eventPeer(profile, kind) {
+    const sel = profile.groupSel;
+    const sex = profile.sex;
+    if (sel === "aian") {
+      return { missing: kind === "mi" ? "No heart-attack figure for this group in this table." : "No stroke figure for this group in this table." };
+    }
+    const names = { hispanic: "Hispanic", asian: "Asian", black: "Black", white: "White" };
+    if (sel === "total" || sel === "other") {
+      const pct = kind === "mi" ? (sex === "male" ? 4.5 : 2.1) : (sex === "male" ? 2.9 : 3.6);
+      return { pct: pct, label: "U.S. " + sexWord(sex), note: otherNote(sel) };
+    }
+    const mi = {
+      male: { white: 4.8, black: 4.0, hispanic: 3.1, asian: 2.8 },
+      female: { white: 2.2, black: 2.3, hispanic: 1.9, asian: 0.5 }
+    };
+    const stroke = {
+      male: { white: 2.7, black: 4.8, hispanic: 2.5, asian: 1.8 },
+      female: { white: 3.6, black: 5.4, hispanic: 2.5, asian: 1.5 }
+    };
+    const pct = (kind === "mi" ? mi : stroke)[sex][sel];
+    return { pct: pct, label: names[sel] + " " + sexWord(sex), note: "" };
+  }
+
+  function renderBmiCard(box, profile) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", "BMI"));
+    if (profile.bmi == null) {
+      card.appendChild(el("p", "", "Enter height and weight."));
+    } else if (profile.sex !== "male" && profile.sex !== "female") {
+      card.appendChild(el("p", "", "Enter sex to compare your BMI."));
+    } else {
+      const med = medianBmi(profile.sex);
+      const gap = profile.bmi - med;
+      const abs = Math.abs(gap);
+      const sexNoun = profile.sex === "male" ? "men" : "women";
+      const peerWho = "U.S. " + sexNoun + " of all origins";
+      const bmiText = profile.bmi.toFixed(1);
+      const medText = med.toFixed(1);
+      const tail = [" for your peers, ", peerWho, "."];
+      if (abs < 0.05) {
+        addLine(card, ["Your BMI is ", { b: bmiText }, ". You are at the median of ", { b: medText }].concat(tail));
+      } else {
+        addLine(card, [
+          "Your BMI is ", { b: bmiText },
+          ". You are ", { b: abs.toFixed(1) },
+          gap > 0 ? " above the median of " : " below the median of ",
+          { b: medText }
+        ].concat(tail));
+      }
+      const named = profile.groupSel === "hispanic" || profile.groupSel === "aian" || profile.groupSel === "asian" || profile.groupSel === "black" || profile.groupSel === "white";
+      if (named) {
+        card.appendChild(el("p", "", "Your life-table peers are " + GROUP_NAME[profile.groupSel] + " " + sexNoun + ". No median BMI is published for them, so this median stays " + peerWho + "."));
+      } else {
+        card.appendChild(el("p", "", "There is no median BMI by race here."));
+      }
+      addLine(card, ["U.S. adults: median ", { b: "28.2" }, " for men and ", { b: "28.3" }, " for women."]);
+      if (profile.bmi >= 30) addLine(card, ["Your BMI is in the obesity range, ", { b: "30" }, " or higher."]);
+      else addLine(card, ["Your BMI is under the obesity line of ", { b: "30" }, "."]);
+    }
+    card.appendChild(el("p", "", "Share of adults with obesity:"));
+    if (!profile.ready) {
+      card.appendChild(el("p", "", "Enter age, sex, and origin for a peer comparison."));
+    } else {
+      const peer = obesityPeer(profile);
+      if (peer.missing) card.appendChild(el("p", "", peer.missing));
+      else {
+        addRate(card, "peer", peer.label, peer.pct);
+        if (peer.note) card.appendChild(el("p", "", peer.note));
+      }
+    }
+    addRate(card, "glob", "U.S. adults", 40.3);
+    box.appendChild(card);
+  }
+
+  function renderSmokeCard(box, profile) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", "Cigarettes"));
+    addLine(card, [
+      "This page’s mix, out of ", { b: "100" }, " adults: ",
+      { b: "67" }, " never smoked, ",
+      { b: "22" }, " have quit, and ",
+      { b: "11" }, " smoke now. Only the ",
+      { b: "11" }, " is the published NHIS figure, 11.0% in 2023. The two quit choices share that ",
+      { b: "22" }, "."
+    ]);
+    const bar = el("div", "hundred");
+    bar.setAttribute("aria-hidden", "true");
+    const segs = [
+      ["seg-never", 67, profile.smoke === "never"],
+      ["seg-former", 22, profile.smoke === "former10" || profile.smoke === "recent"],
+      ["seg-current", 11, profile.smoke === "current"]
+    ];
+    for (let i = 0; i < segs.length; i++) {
+      const seg = el("div", segs[i][0] + (segs[i][2] ? " is-you" : ""));
+      seg.style.width = segs[i][1] + "%";
+      bar.appendChild(seg);
+    }
+    card.appendChild(bar);
+    const rows = [
+      ["never", "Never smoked"],
+      ["former10", "Quit more than 10 years ago"],
+      ["recent", "Quit within the past 10 years"],
+      ["current", "Current cigarette smoker"]
+    ];
+    const picked = {
+      never: "Never smoked",
+      former10: "Quit more than 10 years ago",
+      recent: "Quit within the past 10 years",
+      current: "Current cigarette smoker"
+    };
+    for (let i = 0; i < rows.length; i++) {
+      const row = el("div", "smoke-row" + (profile.smoke === rows[i][0] ? " is-you" : ""));
+      row.appendChild(el("span", "", rows[i][1]));
+      const count = document.createElement("span");
+      if (rows[i][0] === "never") fillRich(count, [{ b: "67" }, " of ", { b: "100" }]);
+      else if (rows[i][0] === "current") fillRich(count, [{ b: "11" }, " of ", { b: "100" }]);
+      else fillRich(count, ["Part of the ", { b: "22" }, " who have quit"]);
+      row.appendChild(count);
+      card.appendChild(row);
+    }
+    if (!profile.smoke) card.appendChild(el("p", "", "You have not chosen a group."));
+    else card.appendChild(el("p", "", "You are in " + picked[profile.smoke] + "."));
+    box.appendChild(card);
+  }
+
+  function renderActivityCard(box, profile) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", "Leisure-time activity"));
+    addLine(card, [
+      "Out of ", { b: "100" }, " U.S. adults: ",
+      { b: "26" }, " do none, ",
+      { b: "27" }, " do some, and ",
+      { b: "47" }, " meet the guideline. Published shares are ",
+      { b: "26.2%" }, ", ",
+      { b: "26.6%" }, ", and ",
+      { b: "47.2%" }, "."
+    ]);
+    const bar = el("div", "hundred");
+    bar.setAttribute("aria-hidden", "true");
+    const segs = [
+      ["seg-none", 26.2, profile.activity === "none"],
+      ["seg-some", 26.6, profile.activity === "some"],
+      ["seg-meets", 47.2, profile.activity === "meets"]
+    ];
+    for (let i = 0; i < segs.length; i++) {
+      const seg = el("div", segs[i][0] + (segs[i][2] ? " is-you" : ""));
+      seg.style.width = segs[i][1] + "%";
+      bar.appendChild(seg);
+    }
+    card.appendChild(bar);
+    const rows = [
+      ["none", "No leisure-time activity", "26"],
+      ["some", "Some, under the guideline", "27"],
+      ["meets", "Meets the guideline", "47"]
+    ];
+    for (let i = 0; i < rows.length; i++) {
+      const row = el("div", "smoke-row" + (profile.activity === rows[i][0] ? " is-you" : ""));
+      row.appendChild(el("span", "", rows[i][1]));
+      const count = document.createElement("span");
+      fillRich(count, [{ b: rows[i][2] }, " of ", { b: "100" }]);
+      row.appendChild(count);
+      card.appendChild(row);
+    }
+    const picked = {
+      none: "no leisure-time activity",
+      some: "some activity, under the guideline",
+      meets: "meeting the guideline"
+    };
+    if (!profile.activity) card.appendChild(el("p", "", "You have not chosen a group. A blank keeps the U.S. mix."));
+    else card.appendChild(el("p", "", "You reported " + picked[profile.activity] + "."));
+    card.appendChild(el("p", "", "Share who met the aerobic guideline. This is not the inactive share used above."));
+    if (!profile.ready) {
+      card.appendChild(el("p", "", "Enter age, sex, and origin for a peer comparison."));
+    } else {
+      const peer = aerobicPeer(profile);
+      if (peer.missing) card.appendChild(el("p", "", peer.missing));
+      else {
+        addRate(card, "peer", peer.label, peer.pct);
+        if (peer.note) card.appendChild(el("p", "", peer.note));
+      }
+    }
+    addRate(card, "glob", "U.S. adults who met it", 47.2);
+    box.appendChild(card);
+  }
+
+  function aerobicPeer(profile) {
+    const sel = profile.groupSel;
+    if (sel === "aian") return { missing: "No figure for this group on who met the aerobic guideline." };
+    if (sel === "total" || sel === "other") {
+      return {
+        pct: profile.sex === "male" ? 52.3 : 42.4,
+        label: "U.S. " + sexWord(profile.sex) + " who met it",
+        note: otherNote(sel)
+      };
+    }
+    const both = {
+      white: ["White adults who met it", 49.2],
+      asian: ["Asian adults who met it", 47.9],
+      hispanic: ["Hispanic adults who met it", 43.8],
+      black: ["Black adults who met it", 41.4]
+    };
+    return { pct: both[sel][1], label: both[sel][0], note: "Not split by sex." };
+  }
+
+  function copdPeer(profile) {
+    const sel = profile.groupSel;
+    if (sel === "aian") return { missing: "No separate COPD figure for this group." };
+    if (sel === "total" || sel === "other") {
+      return {
+        pct: profile.sex === "male" ? 3.4 : 4.1,
+        label: "U.S. " + sexWord(profile.sex),
+        note: otherNote(sel)
+      };
+    }
+    const both = {
+      white: ["White adults", 4.4],
+      black: ["Black adults", 3.5],
+      asian: ["Asian adults", 1.0],
+      hispanic: ["Hispanic adults", 2.0]
+    };
+    return { pct: both[sel][1], label: both[sel][0], note: "Diagnosed COPD, not split by sex." };
+  }
+
+  function ckdPeer(profile) {
+    const sel = profile.groupSel;
+    if (sel === "aian") return { missing: "No chronic kidney disease figure for this group. The U.S. line is stages 1–4, not stage 3 alone." };
+    if (sel === "total" || sel === "other") {
+      return {
+        pct: profile.sex === "male" ? 12 : 14,
+        label: "U.S. " + sexWord(profile.sex) + ", stages 1–4",
+        note: (sel === "other" ? "No separate table for this group, so this peer figure is the U.S. rate. " : "") + "Stages 1–4, not stage 3 alone."
+      };
+    }
+    const both = {
+      white: ["White adults, stages 1–4", 12],
+      black: ["Black adults, stages 1–4", 20],
+      asian: ["Asian adults, stages 1–4", 14],
+      hispanic: ["Hispanic adults, stages 1–4", 14]
+    };
+    return { pct: both[sel][1], label: both[sel][0], note: "Stages 1–4. Most of this is earlier than stage 3, so it is not the hazard group." };
+  }
+
+  function renderLevelCard(box, title, status, peer, globalPct, globalLabel, footnote, detail) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", title));
+    card.appendChild(el("p", "", status));
+    if (detail) card.appendChild(el("p", "", detail));
+    if (!peer) card.appendChild(el("p", "", "Enter age, sex, and origin for a peer comparison."));
+    else if (peer.missing) card.appendChild(el("p", "", peer.missing));
+    else {
+      addRate(card, "peer", peer.label, peer.pct);
+      if (peer.note) card.appendChild(el("p", "", peer.note));
+    }
+    addRate(card, "glob", globalLabel, globalPct);
+    if (Array.isArray(footnote)) addLine(card, footnote);
+    else if (footnote) card.appendChild(el("p", "", footnote));
+    box.appendChild(card);
+  }
+
+  function renderConditionCard(box, title, reported, peer, globalPct, globalLabel, footnote) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", title));
+    card.appendChild(el("p", "", reported ? "You reported this." : "Not specified."));
+    if (!peer) card.appendChild(el("p", "", "Enter age, sex, and origin for a peer comparison."));
+    else if (peer.missing) card.appendChild(el("p", "", peer.missing));
+    else {
+      addRate(card, "peer", peer.label, peer.pct);
+      if (peer.note) {
+        const bits = peer.note.split("12%");
+        if (bits.length === 2) addLine(card, [bits[0], { b: "12%" }, bits[1]]);
+        else card.appendChild(el("p", "", peer.note));
+      }
+    }
+    addRate(card, "glob", globalLabel, globalPct);
+    if (footnote) {
+      const bits = footnote.split("12%");
+      if (bits.length === 2) addLine(card, [bits[0], { b: "12%" }, bits[1]]);
+      else card.appendChild(el("p", "", footnote));
+    }
+    box.appendChild(card);
+  }
+
+  function renderIncomeCard(box, profile) {
+    const card = el("div", "a-card");
+    card.appendChild(el("h4", "", "Personal income"));
+    if (!profile.income) {
+      addLine(card, ["Not specified. Own earnings are left out."]);
+    } else {
+      const name = INCOME_LABEL[profile.income] || "Personal income";
+      addLine(card, ["You set ", { b: name }, ". The rank is among people your sex and age. It is an association, not a higher paycheck."]);
+      if (profile.age != null && profile.age < 40) {
+        addLine(card, ["Death rates use this from age ", { b: "40" }, "."]);
+      }
+    }
+    box.appendChild(card);
+  }
+
+  function outcomeOf(profile) {
+    const table = tableFor(profile);
+    const peers = analyze(table.qx, table.ex100, profile.age, function () { return 1; });
+    const you = analyze(table.qx, table.ex100, profile.age, function (x) { return multiplier(profile, x); });
+    return { you: you, peers: peers, dMed: you.medianAge - peers.medianAge, dE: you.e - peers.e };
+  }
+
+  function reachCount(profile, toAge) {
+    const table = tableFor(profile);
+    const stats = analyze(table.qx, table.ex100, profile.age, function (x) { return multiplier(profile, x); });
+    let lx = 1;
+    for (let i = 0; i < stats.deaths.length; i++) {
+      if (stats.deaths[i].x >= toAge) break;
+      lx -= stats.deaths[i].dx;
+    }
+    return Math.round(lx * 100);
+  }
+
+  function aboutYears(delta, than) {
+    const n = Math.round(delta);
+    const word = Math.abs(n) === 1 ? "year" : "years";
+    const dir = n < 0 ? "earlier" : "later";
+    if (than === "") {
+      if (n === 0) return ["within ", { b: "1 year" }];
+      return ["about ", { b: String(Math.abs(n)) + " " + word }, " " + dir];
+    }
+    const who = than || "your peers";
+    if (n === 0) return ["within ", { b: "1 year" }, " of " + who];
+    return ["about ", { b: String(Math.abs(n)) + " " + word }, " " + dir + " than " + who];
+  }
+
+  function storyHead(box, title) {
+    box.appendChild(el("h4", "", title));
+  }
+
+  function factorKeys(profile) {
+    const keys = [];
+    if (profile.smoke) keys.push("smoke");
+    if (profile.activity) keys.push("activity");
+    if (profile.bmi != null) keys.push("bmi");
+    if (profile.diabetes) keys.push("diabetes");
+    if (profile.mi) keys.push("mi");
+    if (profile.stroke) keys.push("stroke");
+    if (profile.copd) keys.push("copd");
+    if (profile.kidney) keys.push("kidney");
+    if (profile.income) keys.push("income");
+    return keys;
+  }
+
+  function hazardBound(profile) {
+    let cap = false;
+    let floor = false;
+    for (let age = profile.age; age <= 100; age++) {
+      const hr = multiplier(profile, age);
+      if (hr >= 5.999) cap = true;
+      if (hr <= 0.351) floor = true;
+    }
+    return { cap: cap, floor: floor };
+  }
+
+  function diabetesShape(age, withIt) {
+    if (age < 30) return 1;
+    let hr = 1.8;
+    if (age > 70) hr = Math.exp(Math.log(1.8) * Math.max(0.45, 1 - (age - 70) / 40));
+    const denom = 1 + P_DIABETES * (hr - 1);
+    return withIt ? hr / denom : 1 / denom;
+  }
+
+  function renderStory(profile) {
+    const box = $("story");
+    box.replaceChildren();
+    if (!profile.ready) {
+      addLine(box, ["Enter age, sex, and origin. This note is written from the fields you fill."]);
+      return;
+    }
+    const full = outcomeOf(profile);
+    const sexWord = profile.sex === "male"
+      ? (profile.age < 18 ? "boy" : "man")
+      : (profile.age < 18 ? "girl" : "woman");
+    const ageWord = profile.age === 0 ? "newborn" : profile.age + "-year-old";
+    const person = profile.age === 0 ? "You are a newborn " + sexWord : "You are a " + ageWord + " " + sexWord;
+    const who = profile.groupSel === "other"
+      ? person + " in another group. No separate table is published for that group, so this estimate uses the U.S. total."
+      : person + ", " + GROUP_NAME[profile.group] + ".";
+    addLine(box, [
+      who + " Your median is about ",
+      { b: String(Math.round(full.you.medianAge)) },
+      ". Your peers' median is about ",
+      { b: String(Math.round(full.peers.medianAge)) },
+      ", and yours is ",
+    ].concat(aboutYears(full.dMed)).concat([
+      profile.groupSel === "other" ? "." : ". Origin chooses the CDC table for that group."
+    ]));
+
+    const keys = factorKeys(profile);
+    const mark = profile.age < 75 ? 80 : (profile.age < 90 ? 90 : null);
+    if (mark != null && keys.length) {
+      const peersOnly = soloProfile(profile, "none");
+      addLine(box, [
+        "About ",
+        { b: String(reachCount(profile, mark)) },
+        " of ",
+        { b: "100" },
+        " people with these answers reach ",
+        { b: String(mark) },
+        ". About ",
+        { b: String(reachCount(peersOnly, mark)) },
+        " of ",
+        { b: "100" },
+        " peers reach ",
+        { b: String(mark) },
+        "."
+      ]);
+    }
+    if (!keys.length && !profile.other) {
+      addLine(box, ["Body size, smoking, activity, illness, and income are blank. The estimate uses only that CDC table."]);
+    }
+
+    if (profile.smoke) {
+      storyHead(box, "Smoking");
+      const mine = outcomeOf(soloProfile(profile, "smoke"));
+      const neverP = soloProfile(profile, "smoke");
+      neverP.smoke = "never";
+      const currentP = soloProfile(profile, "smoke");
+      currentP.smoke = "current";
+      const versusNever = outcomeOf(neverP).you.e - outcomeOf(currentP).you.e;
+      addLine(box, ["Smoking alone puts your median "].concat(aboutYears(mine.dMed)).concat([
+        ". Your peers include people who smoke now, people who have quit smoking, and people who never smoked."
+      ]));
+      const cite = { 35: "9.1", 45: "8.3", 55: "7.3", 65: "5.9", 75: "4.4" };
+      let near = 55;
+      let dist = 99;
+      const ages = [35, 45, 55, 65, 75];
+      for (let i = 0; i < ages.length; i++) {
+        const d = Math.abs(ages[i] - profile.age);
+        if (d < dist) { dist = d; near = ages[i]; }
+      }
+      const gapN = Math.round(versusNever);
+      const gapWord = Math.abs(gapN) === 1 ? "year" : "years";
+      const gapBits = gapN === 0
+        ? ["about the same life expectancy as people who never smoked. "]
+        : [
+          "about ",
+          { b: String(Math.abs(gapN)) + " " + gapWord },
+          gapN > 0 ? " less life expectancy than people who never smoked. " : " more life expectancy than people who never smoked. "
+        ];
+      addLine(box, [
+        "On this table, people who smoke now have ",
+      ].concat(gapBits).concat([
+        "Le, Mendez, and Warner, 2024, found ",
+        { b: cite[near] + " years" },
+        " at age ",
+        { b: String(near) },
+        ", for men and women together. The CDC figure of at least ",
+        { b: "10 years" },
+        " is that same comparison. The peer gap above is different, because peers include smokers and former smokers."
+      ]));
+      if (profile.smoke === "former10") {
+        addLine(box, ["Quitting more than 10 years ago still carries a little of the extra risk of smoking now. This is not the same as quitting today."]);
+      } else if (profile.smoke === "recent") {
+        addLine(box, ["Quitting in the past 10 years still carries more of the extra risk of smoking now. This is not the same as quitting today."]);
+      } else if (profile.smoke === "never") {
+        addLine(box, ["Never smoking is compared with peers who include smokers and former smokers."]);
+      }
+    }
+
+    if (profile.bmi != null) {
+      storyHead(box, "Body size");
+      const mine = outcomeOf(soloProfile(profile, "bmi"));
+      const ref = soloProfile(profile, "bmi");
+      ref.bmi = 22.5;
+      const versusRef = mine.you.medianAge - outcomeOf(ref).you.medianAge;
+      const med = medianBmi(profile.sex);
+      const gap = profile.bmi - med;
+      const side = gap === 0 ? "at" : (gap > 0 ? "above" : "below");
+      const sexName = profile.sex === "male" ? "U.S. men" : "U.S. women";
+      const bmiLead = [
+        "Your BMI is ",
+        { b: profile.bmi.toFixed(1) },
+        ". "
+      ];
+      if (gap === 0) {
+        bmiLead.push("That matches the median BMI of ", { b: med.toFixed(1) }, " for " + sexName + " of all origins. ");
+      } else {
+        bmiLead.push("That is ", { b: Math.abs(gap).toFixed(1) }, " " + side + " the median BMI of ", { b: med.toFixed(1) }, " for " + sexName + " of all origins. ");
+      }
+      bmiLead.push("Body size alone puts your median ");
+      addLine(box, bmiLead.concat(aboutYears(mine.dMed)).concat([
+        ". It is ",
+      ]).concat(aboutYears(versusRef, "someone with a BMI of 22.5")).concat(["."]));
+      if (profile.bmi < 18.5) {
+        addLine(box, ["A BMI under ", { b: "18.5" }, " is the underweight group in the study. The result changes at 18.5, and one pound can move you across that line."]);
+      } else if (profile.bmi >= 55) {
+        addLine(box, ["Once BMI reaches ", { b: "55" }, ", the result stops getting worse."]);
+      }
+      const avg = profile.sex === "male" ? 29.5 : 29.8;
+      if (Math.abs(profile.bmi - avg) < 0.15) {
+        addLine(box, ["This is about the average U.S. body size for your sex. Your peers' median BMI is about ", { b: med.toFixed(1) }, "."]);
+      }
+    }
+
+    if (profile.activity) {
+      storyHead(box, "Activity");
+      const mine = outcomeOf(soloProfile(profile, "activity"));
+      addLine(box, ["Activity alone puts your median "].concat(aboutYears(mine.dMed)).concat([
+        ". Of ",
+        { b: "100" },
+        " U.S. adults, ",
+        { b: "26" },
+        " do no leisure-time activity, ",
+        { b: "27" },
+        " do some, and ",
+        { b: "47" },
+        " meet the guideline of about 150 minutes a week."
+      ]));
+      if (profile.activity === "some") {
+        addLine(box, ["Some activity is close to what U.S. adults already do, so this gap stays small."]);
+      }
+    }
+
+    if (profile.diabetes) {
+      storyHead(box, "Diabetes");
+      const mine = outcomeOf(soloProfile(profile, "diabetes"));
+      const table = tableFor(profile);
+      const withIt = analyze(table.qx, table.ex100, profile.age, function (x) { return diabetesShape(x, true); });
+      const without = analyze(table.qx, table.ex100, profile.age, function (x) { return diabetesShape(x, false); });
+      addLine(box, [
+        "Diabetes alone puts your median ",
+      ].concat(aboutYears(mine.dMed)).concat([
+        ". Those peers include people with diabetes and people without diabetes. Your median is ",
+      ]).concat(aboutYears(withIt.medianAge - without.medianAge, "someone without diabetes")).concat([
+        ". A 2011 study found about ",
+        { b: "6 years" },
+        " at age 50 when it compared people with diabetes with people without it. This page uses that same result for men and women of every origin, starting at age 30."
+      ]));
+    }
+
+    if (profile.mi) {
+      storyHead(box, "Heart attack");
+      const mine = outcomeOf(soloProfile(profile, "mi"));
+      addLine(box, ["A past heart attack, counted from age 30, puts your median "].concat(aboutYears(mine.dMed)).concat(["."]));
+    }
+    if (profile.stroke) {
+      storyHead(box, "Stroke");
+      const mine = outcomeOf(soloProfile(profile, "stroke"));
+      addLine(box, ["A past stroke, counted from age 30, puts your median "].concat(aboutYears(mine.dMed)).concat(["."]));
+    }
+
+    if (profile.copd) {
+      storyHead(box, "COPD");
+      const mine = outcomeOf(soloProfile(profile, "copd"));
+      const copdBits = ["COPD alone puts your median "].concat(aboutYears(mine.dMed));
+      if (!profile.smoke) {
+        copdBits.push(". Smoking was left blank, so this uses a middle value between people who never smoked, former smokers, and people who smoke now.");
+      } else {
+        copdBits.push(". This line leaves smoking out. Your full estimate still uses the smoking answer you gave.");
+      }
+      addLine(box, copdBits);
+      if (profile.smoke === "never" && (profile.copd === "yes" || profile.copd === "oxygen")) {
+        const kept = soloProfile(profile, "copd");
+        kept.smoke = "never";
+        addLine(box, ["You also answered never smoked. Never smoking gives back much of the time COPD takes off. Together, they put your median "].concat(aboutYears(outcomeOf(kept).dMed)).concat(["."]));
+      }
+    }
+
+    if (profile.kidney) {
+      storyHead(box, "Kidney disease");
+      const mine = outcomeOf(soloProfile(profile, "kidney"));
+      let lead;
+      if (profile.kidney === "failure") lead = ["Kidney failure or dialysis is the more serious kidney answer. It puts your median "];
+      else if (profile.kidney === "stage3") lead = ["Stage 3 without dialysis is the less serious kidney answer. It puts your median "];
+      else lead = ["No kidney disease puts your median "];
+      addLine(box, lead.concat(aboutYears(mine.dMed)).concat(
+        profile.kidney === "no"
+          ? [". Some adults already have kidney disease, so this answer sits a little later than the U.S. average."]
+          : ["."]
+      ));
+    }
+
+    if (profile.income) {
+      storyHead(box, "Personal income");
+      const mine = outcomeOf(soloProfile(profile, "income"));
+      const whoIncome = profile.sex === "male" ? "men" : "women";
+      const outer = profile.sex === "male" ? "5 years" : "3 years";
+      addLine(box, [
+        "This pay quarter puts your median ",
+      ].concat(aboutYears(mine.dMed)).concat([
+        ". It is your own pay among ",
+        whoIncome,
+        " your age. Household income is a different measure. At age ",
+        { b: "40" },
+        ", the bottom quarter and the top quarter each shift the median by about ",
+        { b: outer },
+        ". The two middle quarters shift it by about ",
+        { b: "1 year" },
+        ". Those gaps already include smoking, body size, and origin. The study compared people who already had different pay. It did not test a raise."
+      ]));
+    }
+
+    if (keys.length >= 2) {
+      let sum = 0;
+      for (let i = 0; i < keys.length; i++) sum += Math.round(outcomeOf(soloProfile(profile, keys[i])).dMed);
+      storyHead(box, "Together");
+      if (Math.round(full.dMed) === Math.round(sum)) {
+        addLine(box, [
+          "Taken together, these answers put your median ",
+        ].concat(aboutYears(full.dMed)).concat([
+          ". Adding the separate lines gives that same figure after rounding. The lines can still overlap, because one person can be in more than one line."
+        ]));
+      } else {
+        addLine(box, [
+          "Taken together, these answers put your median ",
+        ].concat(aboutYears(full.dMed)).concat([
+          ". Adding the separate lines comes to ",
+        ]).concat(aboutYears(sum)).concat([
+          ". The figures differ because one person can be in more than one line."
+        ]));
+      }
+    }
+
+    const bound = hazardBound(profile);
+    if (bound.cap) {
+      addLine(box, ["Several serious answers are already included. Another one may not move the age any further."]);
+    }
+    if (bound.floor) {
+      addLine(box, ["Several favorable answers describe overlapping groups. The estimate does not add the full years from each one."]);
+    }
+
+    if (profile.other) {
+      storyHead(box, "Another serious illness");
+      addLine(box, ["You checked another serious illness. That box does not change the ages. COPD and kidney disease have their own questions."]);
+    }
+
+    const gates = [];
+    if (profile.bmi != null && profile.age < 35) gates.push("body size from age 35");
+    if (profile.smoke && profile.age < 25) gates.push("smoking from age 25");
+    if (profile.activity && profile.age < 18) gates.push("activity from age 18");
+    if ((profile.diabetes || profile.mi || profile.stroke) && profile.age < 30) gates.push("diabetes, a past heart attack, and a past stroke from age 30");
+    if ((profile.copd || profile.kidney || profile.income) && profile.age < 40) gates.push("COPD, kidney disease, and personal income from age 40");
+    if (gates.length) addLine(box, ["You are younger than the age when these start to apply: " + gates.join("; ") + ". Later years in the estimate still use them, so the median can still change."]);
+  }
+
+  function renderAnalysis(profile) {
+    const box = $("analysis");
+    box.replaceChildren();
+    renderBmiCard(box, profile);
+    renderIncomeCard(box, profile);
+    renderSmokeCard(box, profile);
+    renderActivityCard(box, profile);
+    const peerReady = profile.ready;
+    renderConditionCard(
+      box,
+      "Diabetes",
+      profile.diabetes,
+      peerReady ? diabetesPeer(profile) : null,
+      12,
+      "U.S. everyone",
+      "Peer rates are age-adjusted adults. The U.S. 12% is everyone, diagnosed or not."
+    );
+    renderConditionCard(
+      box,
+      "Heart attack",
+      profile.mi,
+      peerReady ? eventPeer(profile, "mi") : null,
+      3.2,
+      "U.S. adults",
+      ""
+    );
+    renderConditionCard(
+      box,
+      "Stroke",
+      profile.stroke,
+      peerReady ? eventPeer(profile, "stroke") : null,
+      3.3,
+      "U.S. adults",
+      ""
+    );
+    const copdStatus = {
+      "": "Not specified. A blank is not no COPD.",
+      no: "You reported no COPD.",
+      yes: "You reported COPD, not on oxygen.",
+      oxygen: "You reported COPD on oxygen, or a hospital stay for it."
+    };
+    renderLevelCard(
+      box,
+      "COPD",
+      copdStatus[profile.copd] || copdStatus[""],
+      peerReady ? copdPeer(profile) : null,
+      3.8,
+      "U.S. adults, diagnosed",
+      "Diagnosed COPD. Applied from age 40.",
+      ""
+    );
+    const kidneyStatus = {
+      "": "Not specified. A blank is not no kidney disease.",
+      no: "You reported no kidney disease.",
+      stage3: "You reported stage 3, not on dialysis.",
+      failure: "You reported kidney failure or dialysis."
+    };
+    const kidneyDetail = profile.kidney === "stage3"
+      ? "Stage 4 is not its own choice. This row uses the stage 3 hazard."
+      : "";
+    renderLevelCard(
+      box,
+      "Kidney disease",
+      kidneyStatus[profile.kidney] || kidneyStatus[""],
+      peerReady ? ckdPeer(profile) : null,
+      14,
+      "U.S. adults, stages 1–4",
+      [
+        "The bars are stages 1–4. The hazard uses stage 3 at ",
+        { b: "5.1%" },
+        " and stage 5 at ",
+        { b: "0.2%" },
+        ". Stage 4 is ",
+        { b: "0.3%" },
+        " and is not its own choice."
+      ],
+      kidneyDetail
+    );
+    const other = el("div", "a-card");
+    other.appendChild(el("h4", "", "Another serious illness"));
+    other.appendChild(el("p", "", profile.other ? "You reported this. It is not in the age." : "Not specified. It is not counted."));
+    other.appendChild(el("p", "", "COPD and kidney disease have their own questions."));
+    box.appendChild(other);
+  }
+
+  let chart = null;
+  function bandLabel(text, position) {
+    return {
+      show: true,
+      position: position,
+      formatter: text,
+      color: "#0f2744",
+      fontSize: 13,
+      fontWeight: 700,
+      fontFamily: "Inter, sans-serif"
+    };
+  }
+
+  function drawChart(view) {
+    const el = $("chart");
+    if (!window.echarts) {
+      el.textContent = "Chart did not load.";
+      return;
+    }
+    if (!chart) chart = echarts.init(el);
+    const age = view.age;
+    const global = view.global;
+    const peers = view.peers;
+    const you = view.you;
+    const x0 = age == null ? 0 : Math.floor(Math.max(0, age - 2) / 10) * 10;
+    const x1 = 100;
+    const pts = you ? view.deaths.filter(function (d) { return d.x + 0.5 >= x0 && d.x <= x1; }) : [];
+    const data = pts.map(function (d) { return [d.x + 0.5, d.dx * 100]; });
+    function area(span, color, border, text, position) {
+      const left = Math.max(span[0], x0);
+      const right = Math.min(span[1], x1);
+      if (!(right > left)) return null;
+      return [
+        {
+          xAxis: left,
+          itemStyle: { color: color, borderColor: border, borderWidth: 1.5 },
+          label: bandLabel(text, position)
+        },
+        { xAxis: right }
+      ];
+    }
+    const areas = [
+      area(global, "rgba(245,158,11,0.34)", "#d97706", "U.S. " + fmtSpan(global), (peers || you) ? "insideBottom" : "inside"),
+      peers ? area(peers, "rgba(15,118,110,0.28)", "#0f766e", "Peers " + fmtSpan(peers), "inside") : null,
+      you ? area(you, "rgba(37,99,235,0.28)", "#1d4ed8", "You " + fmtSpan(you), "insideTop") : null
+    ].filter(Boolean);
+    const series = {
+      type: "line",
+      data: data,
+      symbol: "none",
+      smooth: 0.15,
+      lineStyle: { color: "#1e3a8a", width: 2 },
+      areaStyle: { color: "rgba(37,99,235,0.06)" },
+      markArea: {
+        silent: true,
+        label: { color: "#0f2744", fontSize: 13, fontWeight: 700, fontFamily: "Inter, sans-serif" },
+        data: areas
+      }
+    };
+    if (age != null) {
+      series.markLine = {
+        silent: true,
+        symbol: "none",
+        lineStyle: { color: "#dc2626", type: "dashed", width: 2 },
+        label: {
+          show: true,
+          position: "middle",
+          formatter: "Now " + age,
+          color: "#b91c1c",
+          fontSize: 12,
+          fontWeight: 700,
+          fontFamily: "Inter, sans-serif"
+        },
+        data: [{ xAxis: age }]
+      };
+    }
+    chart.setOption({
+      animation: false,
+      grid: { left: you ? 52 : 12, right: 12, top: 28, bottom: you ? 40 : 28 },
+      tooltip: { trigger: "axis", formatter: function (items) {
+        const row = items && items[0];
+        if (!row || !you) return "";
+        const n = row.value[1];
+        const shown = n >= 10 ? n.toFixed(0) : n.toFixed(1);
+        return "Age " + Math.round(row.value[0]) + "<br><b>" + shown + "</b> of 100 die in this year";
+      } },
+      xAxis: {
+        type: "value",
+        min: x0,
+        max: x1,
+        name: "Age",
+        nameLocation: "middle",
+        nameGap: 28,
+        nameTextStyle: { color: "#475569", fontSize: 11, fontFamily: "Inter, sans-serif" },
+        axisLabel: { color: "#475569", fontFamily: "Inter, sans-serif", hideOverlap: true, formatter: function (v) { return String(Math.round(v)); } },
+        minInterval: 10,
+        splitLine: { show: false }
+      },
+      yAxis: you ? {
+        type: "value",
+        min: 0,
+        name: "of 100",
+        nameLocation: "middle",
+        nameGap: 36,
+        nameTextStyle: { color: "#475569", fontSize: 11, fontFamily: "Inter, sans-serif" },
+        minInterval: 1,
+        axisLabel: { color: "#475569", fontSize: 12, fontFamily: "Inter, sans-serif", formatter: function (v) { return String(Math.round(v)); } },
+        axisLine: { show: false },
+        splitLine: { lineStyle: { color: "#e2e8f0" } }
+      } : { type: "value", show: false, min: 0, max: 1 },
+      series: [series]
+    }, true);
+    chart.resize();
+  }
+
+  function sexForCurrentAverage() {
+    const unit = document.body.dataset.unit || "us";
+    const sexes = ["male", "female"];
+    for (let i = 0; i < sexes.length; i++) {
+      const sex = sexes[i];
+      const avg = BODY_AVG[sex];
+      if (unit === "us") {
+        const ft = Math.floor(avg.inches / 12);
+        const inch = Math.round((avg.inches - ft * 12) * 10) / 10;
+        if (numOrBlank("feet") === String(ft) && Number(numOrBlank("inches")) === inch && Number(numOrBlank("weight")) === avg.lb) return sex;
+      } else {
+        if (numOrBlank("cm") === (avg.inches * 2.54).toFixed(1) && numOrBlank("weight") === (avg.lb * 0.45359237).toFixed(1)) return sex;
+      }
+    }
+    return "";
+  }
+
+  function setUnit(unit) {
+    const from = document.body.dataset.unit || "us";
+    if (from === unit) return;
+    const keptAverage = sexForCurrentAverage();
+    const feet = numOrBlank("feet"), inches = numOrBlank("inches"), cm = numOrBlank("cm"), weight = numOrBlank("weight");
+    if (unit === "metric" && feet !== "" && inches !== "" && weight !== "") {
+      const totalIn = Number(feet) * 12 + Number(inches);
+      const lb = Number(weight);
+      if (Number.isFinite(totalIn) && Number.isFinite(lb) && totalIn > 0) {
+        $("cm").value = (totalIn * 2.54).toFixed(1);
+        $("weight").value = (lb * 0.45359237).toFixed(1);
+        fieldSource.cm = fieldSource.feet === "user" || fieldSource.inches === "user" ? "user" : fieldSource.feet;
+      }
+    }
+    if (unit === "us" && cm !== "" && weight !== "") {
+      const cmN = Number(cm), kg = Number(weight);
+      if (Number.isFinite(cmN) && Number.isFinite(kg)) {
+        const totalIn = cmN / 2.54;
+        const ft = Math.floor(totalIn / 12);
+        let inch = Math.round((totalIn - ft * 12) * 10) / 10;
+        let feetOut = ft;
+        if (inch >= 12) { feetOut += 1; inch = Math.round((inch - 12) * 10) / 10; }
+        $("feet").value = String(feetOut);
+        $("inches").value = String(inch);
+        $("weight").value = (kg / 0.45359237).toFixed(1);
+        fieldSource.feet = fieldSource.cm;
+        fieldSource.inches = fieldSource.cm;
+      }
+    }
+    document.body.dataset.unit = unit;
+    $("us-height").classList.toggle("hidden", unit !== "us");
+    $("metric-height").classList.toggle("hidden", unit !== "metric");
+    $("weight-label").textContent = unit === "us" ? "Weight (pounds)" : "Weight (kilograms)";
+    $("weight").placeholder = unit === "us" ? "Clear to leave body size out" : "Clear to leave body size out";
+    $("unit-us").classList.toggle("btn-primary", unit === "us");
+    $("unit-metric").classList.toggle("btn-primary", unit === "metric");
+    if (keptAverage) applySexAverage(keptAverage);
+  }
+
+  $("profile").addEventListener("submit", function (e) { e.preventDefault(); });
+  const BODY_AVG = {
+    male: { inches: 69, lb: 199.8 },
+    female: { inches: 63.5, lb: 170.8 }
+  };
+
+  let fieldSource = {};
+
+  function markFields(ids, source) {
+    for (let i = 0; i < ids.length; i++) fieldSource[ids[i]] = source;
+  }
+
+  function setTone(el, tone) {
+    el.classList.remove("field-need", "field-set", "field-auto");
+    if (tone) el.classList.add("field-" + tone);
+  }
+
+  function paintFields() {
+    const required = { age: true, "age-range": true, sex: true, group: true };
+    const ids = ["age", "age-range", "sex", "group", "feet", "inches", "cm", "weight", "income", "smoke", "activity", "copd", "kidney"];
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const el = $(id);
+      const value = id === "age-range" ? $("age").value.trim() : String(el.value).trim();
+      const source = id === "age-range" ? fieldSource.age : fieldSource[id];
+      if (!value) setTone(el, required[id] ? "need" : "");
+      else setTone(el, source === "auto" ? "auto" : "set");
+    }
+  }
+
+  function applySexAverage(sex) {
+    const avg = BODY_AVG[sex];
+    if (!avg) return;
+    const unit = document.body.dataset.unit || "us";
+    if (unit === "us") {
+      const ft = Math.floor(avg.inches / 12);
+      const inch = Math.round((avg.inches - ft * 12) * 10) / 10;
+      $("feet").value = String(ft);
+      $("inches").value = String(inch);
+      $("weight").value = String(avg.lb);
+    } else {
+      $("cm").value = (avg.inches * 2.54).toFixed(1);
+      $("weight").value = (avg.lb * 0.45359237).toFixed(1);
+    }
+    markFields(["feet", "inches", "cm", "weight"], "auto");
+  }
+
+  function noteUserField(target) {
+    if (!target || !target.id) return;
+    fieldSource[target.id] = "user";
+    if (target.id === "age") fieldSource["age-range"] = "user";
+    if (target.id === "age-range") fieldSource.age = "user";
+  }
+
+  $("profile").addEventListener("input", function (e) {
+    noteUserField(e.target);
+    if (e.target && e.target.id === "age") $("age-range").value = $("age").value || "0";
+    if (e.target && e.target.id === "age-range") $("age").value = $("age-range").value;
+    if (e.target && e.target.id === "sex") applySexAverage($("sex").value);
+    render();
+  });
+  $("sex").addEventListener("change", function () {
+    fieldSource.sex = "user";
+    applySexAverage($("sex").value);
+    render();
+  });
+  $("profile").addEventListener("change", function (e) {
+    if (!e.target || e.target.id === "sex" || e.target.id === "age" || e.target.id === "age-range") return;
+    noteUserField(e.target);
+    render();
+  });
+  $("unit-us").addEventListener("click", function () { setUnit("us"); render(); });
+  $("unit-metric").addEventListener("click", function () { setUnit("metric"); render(); });
+  $("example").addEventListener("click", function () {
+    setUnit("us");
+    $("age").value = "55";
+    $("age-range").value = "55";
+    $("sex").value = "male";
+    $("group").value = "total";
+    $("smoke").value = "current";
+    $("activity").value = "";
+    $("copd").value = "";
+    $("kidney").value = "";
+    $("income").value = "";
+    $("feet").value = "5";
+    $("inches").value = "9";
+    $("weight").value = "240";
+    $("diabetes").checked = true;
+    $("mi").checked = false;
+    $("stroke").checked = false;
+    $("other").checked = false;
+    markFields(["age", "age-range", "sex", "group", "smoke", "feet", "inches", "weight"], "auto");
+    render();
+  });
+  $("reset").addEventListener("click", function () {
+    setUnit("us");
+    fieldSource = {};
+    $("age").value = "";
+    $("age-range").value = "0";
+    $("sex").value = "";
+    $("group").value = "";
+    $("smoke").value = "";
+    $("activity").value = "";
+    $("copd").value = "";
+    $("kidney").value = "";
+    $("income").value = "";
+    $("feet").value = "";
+    $("inches").value = "";
+    $("cm").value = "";
+    $("weight").value = "";
+    $("diabetes").checked = false;
+    $("mi").checked = false;
+    $("stroke").checked = false;
+    $("other").checked = false;
+    render();
+  });
+
+  if (typeof ResizeObserver !== "undefined") {
+    const ro = new ResizeObserver(function () {
+      if (chart) chart.resize();
+    });
+    ro.observe($("chart").parentElement);
+  }
+
+  window.lifeModel = { analyze: analyze, multiplier: multiplier, readProfile: readProfile, LIFE: LIFE };
+  render();
+})();
+</script>
+</body>
+</html>
